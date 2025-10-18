@@ -1,0 +1,112 @@
+{
+  "Auth": {
+    "Login": {
+      "BackToHomePage": "Вернуться на главную",
+      "Title": "Логин",
+      "UsernameOrEmail": "Имя пользователя или почта",
+      "Password": "Пароль",
+      "Button": {
+        "Send": "Войти",
+        "Sending": "Отправка..."
+      },
+      "Register": "Нет аккаунта? Зарегистрироваться",
+      "Messages": {
+        "Success": "Успешный вход!",
+        "Failure": "Не удалось войти. Неверные данные или пароль."
+      },
+      "ForgotPassword": "Забыли пароль?"
+    },
+    "Register": {
+      "BackToHomePage": "Вернуться на главную",
+      "Title": "Регистрация",
+      "Fullname": "Имя",
+      "Username": "Имя пользователя",
+      "Email": "Почта",
+      "Bio": "О себе",
+      "Password": "Пароль",
+      "Button": {
+        "Send": "Зарегистрироваться",
+        "Sending": "Отправка...",
+        "SendOTP": "Отправить OTP",
+        "Verify": "Подтвердить",
+        "Verifying": "Подтверждение..."
+      },
+      "Login": "Есть аккаунт? Логин",
+      "Messages": {
+        "Success": "Успешая регистрация!",
+        "Failure": "Не удалось зарегистрироваться. Заполните все поля."
+      },
+      "Steps": {
+        "1": "Шаг 1",
+        "2": "Шаг 2",
+        "3": "Шаг 3"
+      },
+      "OTP": "Одноразовый пароль",
+      "EnterOTP": "Введите одноразовый пароль отправленный в"
+    },
+    "ForgotPassword": {
+      "BackToLogin": "Вернуться к логину",
+      "Title": "Забыли пароль?",
+      "Subtitle": "Давайте его восстановим.",
+      "Email": "Введите адрес электронной почты",
+      "Button": {
+        "Send": "Отправить",
+        "Sending": "Отправка..."
+      }
+    },
+    "ResetPassword": {
+      "Title": "Сбросить пароль",
+      "NewPassword": "Новый пароль",
+      "ConfirmPassword": "Подтвердить пароль",
+      "Button": {
+        "Send": "Сохранить",
+        "Sending": "Сохраняется..."
+      }
+    }
+  },
+  "Create": {
+    "Title": "Создать",
+    "Options": {
+      "Option1": "Фотосет из 4 изображений",
+      "Option2": "Фотосет из 10 изображений",
+      "Option3": "Image to image",
+      "Option4": "Text to image"
+    }
+  },
+  "Home": {
+    "Title": "Главная",
+    "Buttons": {
+      "Login": "Войти",
+      "Register": "Регистрация"
+    }
+  },
+  "Library": {
+    "Title": "Ваша библиотека"
+  },
+  "Navbar": {
+    "Home": "Главная",
+    "Search": "Поиск",
+    "Create": "Создать",
+    "Library": "Библиотека",
+    "Profile": "Профиль"
+  },
+  "Profile": {
+    "Title": "Профиль",
+    "UserInfo": {
+      "Publications": "Публикации",
+      "Followers": "Подписчики",
+      "Following": "Подписки"
+    }
+  },
+  "Search": {
+    "Title": "Поиск",
+    "Placeholder": "Поиск изображений..."
+  },
+  "Settings": {
+    "BackToProfile": "Профиль",
+    "Title": "Настройки",
+    "Language": "Поменять язык",
+    "Theme": "Поменять тему",
+    "Logout": "Выйти из аккаунта"
+  }
+}

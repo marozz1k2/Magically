@@ -1,0 +1,112 @@
+{
+  "Auth": {
+    "Login": {
+      "BackToHomePage": "Back to home page",
+      "Title": "Login",
+      "UsernameOrEmail": "Enter username or email",
+      "Password": "Enter the password",
+      "Button": {
+        "Send": "Send",
+        "Sending": "Sending..."
+      },
+      "Register": "No account? Register",
+      "Messages": {
+        "Success": "Successfully logged in!",
+        "Failure": "Couldn't login. Invalid credentials."
+      },
+      "ForgotPassword": "Forgot Password?"
+    },
+    "Register": {
+      "BackToHomePage": "Back to home page",
+      "Title": "Register",
+      "Fullname": "Full name",
+      "Username": "Username",
+      "Email": "Email",
+      "Bio": "Bio",
+      "Password": "Enter the password",
+      "Button": {
+        "Send": "Send",
+        "Sending": "Sending...",
+        "SendOTP": "Send OTP",
+        "Verify": "Verify",
+        "Verifying": "Verifying..."
+      },
+      "Login": "Already have account? Login",
+      "Messages": {
+        "Success": "Successfully registered!",
+        "Failure": "Couldn't register. Fill all fields."
+      },
+      "Steps": {
+        "1": "Шаг 1",
+        "2": "Шаг 2",
+        "3": "Шаг 3"
+      },
+      "OTP": "One-Time Password",
+      "EnterOTP": "Enter the OTP sent to"
+    },
+    "ForgotPassword": {
+      "BackToLogin": "Back to login",
+      "Title": "Forgot password?",
+      "Subtitle": "Let's recover you password.",
+      "Email": "Enter your email",
+      "Button": {
+        "Send": "Send",
+        "Sending": "Sending..."
+      }
+    },
+    "ResetPassword": {
+      "Title": "Reset password",
+      "NewPassword": "New password",
+      "ConfirmPassword": "Confirm password",
+      "Button": {
+        "Send": "Save",
+        "Sending": "Saving..."
+      }
+    }
+  },
+  "Create": {
+    "Title": "Create",
+    "Options": {
+      "Option1": "Photo set with 4 images",
+      "Option2": "Photo set with 10 images",
+      "Option3": "Image to image",
+      "Option4": "Text to image"
+    }
+  },
+  "Home": {
+    "Title": "Home",
+    "Buttons": {
+      "Login": "Login",
+      "Register": "Register"
+    }
+  },
+  "Library": {
+    "Title": "Your library"
+  },
+  "Navbar": {
+    "Home": "Home",
+    "Search": "Search",
+    "Create": "Create",
+    "Library": "Library",
+    "Profile": "Profile"
+  },
+  "Profile": {
+    "Title": "Profile",
+    "UserInfo": {
+      "Publications": "Publications",
+      "Followers": "Followers",
+      "Following": "Following"
+    }
+  },
+  "Search": {
+    "Title": "Search",
+    "Placeholder": "Search for images..."
+  },
+  "Settings": {
+    "BackToProfile": "Profile",
+    "Title": "Settings",
+    "Language": "Change the language",
+    "Theme": "Change the theme",
+    "Logout": "Logout from account"
+  }
+}
