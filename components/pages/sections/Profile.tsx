@@ -10,7 +10,7 @@ import { useTranslations } from "next-intl";
 import { EditProfileDialog } from "@/components/shared/user/EditProfileDialog";
 import { UserProfile } from "@/components/shared/user/UserProfile";
 import { PersonalProfileEmpty } from "@/components/states/empty/Empty";
-import { ProfileError } from "@/components/states/error/Error";
+import { NotAuthorized, ProfileError } from "@/components/states/error/Error";
 import { ProfileLoader } from "@/components/states/loaders/Loaders";
 import { Button } from "@/components/ui/button";
 import { ConfettiButton } from "@/components/ui/confetti";
@@ -26,12 +26,16 @@ export const Profile = () => {
   const { data: user, isLoading, isError } = useMyProfile();
   const [editProfileOpen, setEditProfileOpen] = useState(false);
 
-  if (isLoading) {
+  if (!user) {
+    return <div className="state-center section-padding"><NotAuthorized /></div>;
+  }
+
+  if (user && isLoading) {
     return <ProfileLoader />;
   }
 
-  if (isError) {
-    return <ProfileError />;
+  if (user && isError) {
+    return <div className="state-center section-padding"><ProfileError /></div>;
   }
 
   const links = BASE_URL + pathname + "/" + user.username;
@@ -63,7 +67,7 @@ export const Profile = () => {
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 text-muted-foreground">
           <span className="text-md w-40">Ваша активность:</span>
           <div className="flex items-center w-full mt-1">
-            <Progress value={user.dailyActions.count} className="w-full max-w-[300px]" />
+            <Progress value={user.dailyActions.count * 10} className="w-full max-w-[150px]" />
             <span className="px-2 w-16 text-sm text-muted-foreground text-center">{user.dailyActions.count} / 10</span>
           </div>
         </div>

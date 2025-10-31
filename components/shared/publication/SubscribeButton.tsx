@@ -9,9 +9,10 @@ import { Publication } from "@/types";
 type SubscribeButtonProps = {
   publication: Publication;
   style?: string;
+  className?: string;
 };
 
-export const SubscribeButton = ({ publication, style = "login" }: SubscribeButtonProps) => {
+export const SubscribeButton = ({ publication, style = "login", className }: SubscribeButtonProps) => {
   const subscribe = useSubscribe();
   const unsubscribe = useUnsubscribe();
 
@@ -53,7 +54,7 @@ export const SubscribeButton = ({ publication, style = "login" }: SubscribeButto
     <Button
       variant={isFollowing ? "outline" : "default"}
       onClick={isFollowing ? handleUnsubscribe : handleSubscribe}
-      className={`${style === "glass" ? "btn-glass" : "btn-login"}`}
+      className={`${style === "glass" ? "btn-glass" : "btn-login"} ${className}`}
     >
       {isFollowing ? "Отписаться" : "Подписаться"}
     </Button>

@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 
 import { UserProfile } from "@/components/shared/user/UserProfile";
 import { UserProfileEmpty } from "@/components/states/empty/Empty";
-import { ProfileError } from "@/components/states/error/Error";
+import { NotAuthorized, ProfileError } from "@/components/states/error/Error";
 import { UserProfileLoader } from "@/components/states/loaders/Loaders";
 import { Separator } from "@/components/ui/separator";
 import { useProfile } from "@/hooks/useProfile";
@@ -16,12 +16,16 @@ export const Profile = ({ username }: { username: string }) => {
   const t = useTranslations("Profile");
   const { data: user, isLoading, isError } = useProfile(username);
 
-  if (isLoading) {
+  if (!user) {
+    return <div className="state-center section-padding"><NotAuthorized /></div>;
+  }
+
+  if (user && isLoading) {
     return <UserProfileLoader />;
   }
 
-  if (isError) {
-    return <ProfileError />;
+  if (user && isError) {
+    return <div className="state-center section-padding"><ProfileError /></div>;
   }
 
   return (

@@ -68,7 +68,7 @@ export const CommentSection = ({ publicationId }: { publicationId: string }) => 
       className={`w-full`}
     >
       <Card className={`group shadow-none duration-200 bg-transparent border-none ${depth > 0 ? "" : ""}`}>
-        <CardContent className="px-4">
+        <CardContent className="px-2">
           <div className="flex items-start gap-4">
             <div className="flex-1 min-w-0 space-y-2">
               <div className="flex justify-between items-center gap-2 text-muted-foreground">
@@ -152,8 +152,8 @@ export const CommentSection = ({ publicationId }: { publicationId: string }) => 
   );
 
   return (
-    <section className="flex flex-col h-screen w-full">
-      <div className="p-4 border-b">
+    <section className="flex flex-col h-full w-full">
+      <div className="py-4 px-2 border-b">
         <h3 className="text-lg font-semibold">Комментарии</h3>
         <p className="text-sm text-muted-foreground">
           {comments?.length || 0} {comments?.length === 1 ? "комментарий" : "комментариев"}
@@ -166,7 +166,7 @@ export const CommentSection = ({ publicationId }: { publicationId: string }) => 
             <div className="space-y-4">
               {[1, 2, 3].map((i) => (
                 <Card key={i}>
-                  <CardContent className="p-4">
+                  <CardContent className="py-4 px-2">
                     <div className="flex gap-3">
                       <Skeleton className="h-10 w-10 rounded-full flex-shrink-0" />
                       <div className="flex-1 space-y-2">
@@ -195,7 +195,7 @@ export const CommentSection = ({ publicationId }: { publicationId: string }) => 
         <div className="h-24" />
       </ScrollArea>
 
-      <div className="backdrop-blur-3xl bg-transparent p-4 sticky bottom-0 z-50">
+      <div className="backdrop-blur-3xl bg-transparent py-4 px-2 sticky w-full bottom-0 z-50">
         <AnimatePresence>
           {replyTo && (
             <motion.div
@@ -222,7 +222,7 @@ export const CommentSection = ({ publicationId }: { publicationId: string }) => 
           )}
         </AnimatePresence>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-row items-center gap-2">
           <Input
             placeholder={replyTo ? "Напишите ответ..." : "Напишите комментарий..."}
             value={text}
@@ -233,7 +233,7 @@ export const CommentSection = ({ publicationId }: { publicationId: string }) => 
                 handleSubmit(e);
               }
             }}
-            className="flex-1 h-11"
+            className="flex-1 h-11 "
           />
           <motion.div whileTap={{ scale: 0.95 }}>
             <Button

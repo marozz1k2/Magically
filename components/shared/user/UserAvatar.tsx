@@ -1,6 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-
 import { API_URL } from "@/lib/api";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const UserAvatar = (user: { username: string; avatar?: string; fullname: string }) => {
   return (
@@ -8,7 +7,7 @@ export const UserAvatar = (user: { username: string; avatar?: string; fullname: 
       <AvatarImage
         src={user.avatar !== null ? API_URL! + user.avatar : ""}
         alt={user.username}
-        className="rounded-full h-full w-full"
+        className="rounded-full h-full w-full object-cover"
       />
       <AvatarFallback className="rounded-full text-black dark:text-white">
         {user.avatar === null ? user.fullname!.charAt(0) : ""}

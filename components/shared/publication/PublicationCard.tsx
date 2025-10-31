@@ -22,7 +22,7 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
     <div className="flex flex-col items-start justify-center gap-2">
       <div className="flex justify-between md:hidden w-full">
         <UserProfile {...publication.author} />
-        <SubscribeButton publication={publication} style="btn-login" />
+        <SubscribeButton publication={publication} style="btn-login" className={`${userId === publication.author.id ? 'hidden' : 'block'}`} />
       </div>
       <div className="relative w-full group">
         <Link href={`/publications/${publication.id}`} key={publication.id}>
@@ -65,7 +65,7 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
               )}
             </div>
           </div>
-          <SubscribeButton publication={publication} style="glass" />
+          <SubscribeButton publication={publication} style="glass" className={`${userId === publication.author.id ? 'hidden' : 'block'}`} />
         </div>
         <div className="flex md:hidden flex-col items-start justify-center gap-2 px-4">
           <div className="flex items-center justify-start gap-4 mt-2">

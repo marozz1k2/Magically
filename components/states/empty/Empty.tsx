@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { BookOpen, Newspaper, SearchX } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
+import { BookOpen, Newspaper, SearchX, UserRoundX } from "lucide-react";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 
 export const EmptyComponent = ({
@@ -49,11 +48,21 @@ export const ExploreEmpty = () => {
   );
 };
 
-export const SearchEmpty = () => {
+export const SearchUserEmpty = () => {
   return (
     <EmptyComponent
-      title="Nothing was found"
-      description="No publication or users was found, try another one."
+      title="User wasn't found"
+      description="No users was found with this username, try another one."
+      icon={UserRoundX}
+    />
+  );
+};
+
+export const SearchPublicationEmpty = () => {
+  return (
+    <EmptyComponent
+      title="Publication wasn't found"
+      description="No publication was found with this data, try another one."
       icon={SearchX}
     />
   );

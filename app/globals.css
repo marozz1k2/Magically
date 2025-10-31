@@ -69,7 +69,14 @@
       transform: rotate(-5deg) scale(0.9);
     }
   }
-}
+
+  --animate-background-position-spin: background-position-spin 3000ms infinite alternate
+;
+  @keyframes background-position-spin {
+  0% {
+    background-position: top center;}
+  100% {
+    background-position: bottom center;}}}
 
 :root {
   --radius: 0.625rem;
@@ -237,5 +244,14 @@
 
   .grid-2 {
     @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }

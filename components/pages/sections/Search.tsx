@@ -6,11 +6,10 @@ import { useDebounceValue } from "usehooks-ts";
 
 import { PublicationCard } from "@/components/shared/publication/PublicationCard";
 import { UserCard } from "@/components/shared/user/UserCard";
-import { SearchEmpty } from "@/components/states/empty/Empty";
+import { SearchPublicationEmpty, SearchUserEmpty } from "@/components/states/empty/Empty";
 import { ExploreError, NotAuthorized, SearchError } from "@/components/states/error/Error";
 import { SearchLoader } from "@/components/states/loaders/Loaders";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useUser } from "@/hooks/useAuth";
 import { useSearch } from "@/hooks/useSearch";
@@ -34,7 +33,7 @@ export const Search = () => {
       <div className="flex gap-4">
         <Input
           placeholder="Search users, publications, prompts..."
-          className="w-full"
+          className="w-full rounded-full placeholder:px-1"
           value={filters.query}
           onChange={(e: any) => setFilters((prev) => ({ ...prev, query: e.target.value }))}
         />
@@ -54,6 +53,9 @@ export const Search = () => {
               ))}
             </>
           )}
+          {searchResults && searchResults.users.length === 0 && (
+            <SearchUserEmpty />
+          )}
         </TabsContent>
         <TabsContent value="publications" className="space-y-4 mt-4">
           {searchResults?.publications.length > 0 && (
@@ -66,8 +68,8 @@ export const Search = () => {
               </div>
             </>
           )}
-          {searchResults && searchResults.users.length === 0 && searchResults.publications.length === 0 && (
-            <SearchEmpty />
+          {searchResults && searchResults.publications.length === 0 && (
+            <SearchPublicationEmpty />
           )}
         </TabsContent>
       </Tabs>

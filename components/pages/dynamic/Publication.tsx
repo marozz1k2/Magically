@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, MessageCircle } from "lucide-react";
 
+import { ChevronLeft, MessageCircle } from "lucide-react";
 import { CommentSection } from "@/components/shared/publication/CommentSection";
 import { LikeButton } from "@/components/shared/publication/LikeButton";
 import { PublicationActions } from "@/components/shared/publication/PublicationActions";
@@ -47,7 +47,7 @@ export const Publication = ({ publicationId }: { publicationId: string }) => {
       <div className="flex flex-col items-start justify-start gap-4 mt-12 md:mt-4">
         <div className="flex justify-between w-full">
           <UserProfile {...publication.author} />
-          <SubscribeButton publication={publication} style="login" />
+          <SubscribeButton publication={publication} style="login" className={`${user.id === publication.author.id ? 'hidden' : 'block'}`} />
         </div>
         {publication.videoUrl ? (
           <video
@@ -68,7 +68,7 @@ export const Publication = ({ publicationId }: { publicationId: string }) => {
           />
         )}
 
-        <div className="flex flex-col items-start justify-center gap-2 px-4">
+        <div className="flex flex-col items-start justify-center gap-2 px-2">
           <div className="flex items-center justify-start gap-4">
             <LikeButton {...publication} />
             <button className="flex items-center justify-center bg-none hover:bg-transparent p-0 magic-transition gap-1">
