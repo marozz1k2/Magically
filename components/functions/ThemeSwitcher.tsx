@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "../ui/button";
+import { MoonIcon, SunIcon } from "lucide-react";
 
-// theme switcher component
 export const ThemeSwitcher = () => {
+  const t = useTranslations("Components.Theme");
   const [mounted, setMounted] = useState(false);
   const { systemTheme, theme, setTheme } = useTheme();
   const currentTheme = theme || systemTheme;
@@ -25,7 +26,7 @@ export const ThemeSwitcher = () => {
   const handleThemeChange = () => {
     const newTheme = currentTheme === "dark" ? "light" : "dark";
     localStorage.setItem("theme", newTheme);
-    setTheme(newTheme); // Set theme after updating localStorage
+    setTheme(newTheme);
   };
 
   return (
@@ -37,12 +38,12 @@ export const ThemeSwitcher = () => {
       {currentTheme === "dark" ? (
         <div className="flex items-center justify-start gap-2 w-full">
           <MoonIcon />
-          <span>Темная тема</span>
+          <span>{t("dark")}</span>
         </div>
       ) : (
         <div className="flex items-center justify-start gap-2 w-full">
           <SunIcon />
-          <span>Светлая тема</span>
+          <span>{t("light")}</span>
         </div>
       )}
     </Button>

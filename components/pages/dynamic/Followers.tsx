@@ -1,17 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import { ChevronLeft } from "lucide-react";
 
+import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useUserFollowers } from "@/hooks/useProfile";
+
+import { UserAttributes } from "@/types";
+import { ChevronLeft } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 import { UserCard } from "@/components/shared/user/UserCard";
 import { FollowersError } from "@/components/states/error/Error";
 import { ListLoader } from "@/components/states/loaders/Loaders";
-import { Separator } from "@/components/ui/separator";
-import { useUserFollowers } from "@/hooks/useProfile";
-import { UserAttributes } from "@/types";
 
 export const Followers = () => {
+  const t = useTranslations("Components.Followers");
   const { username } = useParams<{ username: string }>();
   const safeUsername = Array.isArray(username) ? username[0] : username;
 
@@ -31,7 +34,7 @@ export const Followers = () => {
         <Link href={`/profile/${username}`} className="secondary-hover magic-transition rounded-md">
           <ChevronLeft />
         </Link>
-        <h1 className="text-xl sm:text-2xl font-semibold">Подписки</h1>
+        <h1 className="text-xl sm:text-2xl font-semibold">{t("title")}</h1>
       </div>
 
       <Separator orientation="horizontal" className="my-2" />
@@ -40,7 +43,7 @@ export const Followers = () => {
         {data.length > 0 ? (
           data.map((user: UserAttributes) => <UserCard key={user.id} user={user} />)
         ) : (
-          <p className="text-center text-muted-foreground py-4">Нет подписок</p>
+          <p className="text-center text-muted-foreground py-4">{t("empty")}</p>
         )}
       </div>
     </section>

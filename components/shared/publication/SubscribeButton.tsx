@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 import { useSubscribe, useUnsubscribe } from "@/hooks/useProfile";
+
 import { Publication } from "@/types";
+import { Button } from "@/components/ui/button";
 
 type SubscribeButtonProps = {
   publication: Publication;
@@ -13,6 +14,8 @@ type SubscribeButtonProps = {
 };
 
 export const SubscribeButton = ({ publication, style = "login", className }: SubscribeButtonProps) => {
+  const t = useTranslations("Components.FollowButton");
+
   const subscribe = useSubscribe();
   const unsubscribe = useUnsubscribe();
 
@@ -56,7 +59,7 @@ export const SubscribeButton = ({ publication, style = "login", className }: Sub
       onClick={isFollowing ? handleUnsubscribe : handleSubscribe}
       className={`${style === "glass" ? "btn-glass" : "btn-login"} ${className}`}
     >
-      {isFollowing ? "Отписаться" : "Подписаться"}
+      {isFollowing ? t("Unfollow") : t("Follow")}
     </Button>
   );
 };

@@ -1,7 +1,18 @@
 "use client";
 
-import { ChevronsUpDown, LogOut, Settings } from "lucide-react";
+import Link from "next/link";
 
+import { useLogout } from "@/hooks/useAuth";
+import { useTranslations } from "next-intl";
+
+import { UserAttributes } from "@/types";
+import { UserAvatar } from "../user/UserAvatar";
+
+import {
+  ChevronsUpDown,
+  Cog,
+  LogOut,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,14 +22,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
-import { useLogout } from "@/hooks/useAuth";
-import { UserAttributes } from "@/types";
-import { UserAvatar } from "../user/UserAvatar";
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar
+} from "@/components/ui/sidebar";
 
 export function NavUser(user: UserAttributes) {
-  const { isMobile } = useSidebar();
+  const t = useTranslations("Components.NavUser");
   const logoutMutation = useLogout();
+  const { isMobile } = useSidebar();
 
   const logout = async () => {
     await logoutMutation.mutateAsync();
@@ -59,18 +73,20 @@ export function NavUser(user: UserAttributes) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Settings />
-                Settings
+                <Link href="/settings" className="flex items-center gap-2">
+                  <Cog />
+                  {t("Settings")}
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={logout}>
               <LogOut />
-              Log out
+              {t("Logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
   );
-}
+};

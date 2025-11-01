@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Newspaper, SearchX, UserRoundX } from "lucide-react";
+import { BookOpen, GalleryHorizontalEnd, Newspaper, SearchX, UserRoundX } from "lucide-react";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 
 export const EmptyComponent = ({
@@ -37,55 +38,73 @@ export const EmptyComponent = ({
 };
 
 export const ExploreEmpty = () => {
+  const t = useTranslations("States.Empty.Publications");
   return (
     <EmptyComponent
-      title="No publications"
-      description="Seems like there is no publications, be first, create one!"
-      icon={Newspaper}
-      button="Create"
+      title={t("title")}
+      description={t("description")}
+      button={t("button")}
       buttonLink="/create"
+      icon={Newspaper}
     />
   );
 };
 
 export const SearchUserEmpty = () => {
+  const t = useTranslations("States.Empty.SearchUser");
   return (
     <EmptyComponent
-      title="User wasn't found"
-      description="No users was found with this username, try another one."
+      title={t("title")}
+      description={t("description")}
       icon={UserRoundX}
     />
   );
 };
 
 export const SearchPublicationEmpty = () => {
+  const t = useTranslations("States.Empty.SearchPublication");
   return (
     <EmptyComponent
-      title="Publication wasn't found"
-      description="No publication was found with this data, try another one."
+      title={t("title")}
+      description={t("description")}
       icon={SearchX}
     />
   );
 };
 
 export const PersonalProfileEmpty = () => {
+  const t = useTranslations("States.Empty.PersonalProfile");
   return (
     <EmptyComponent
-      title="Nothing was found"
-      description="No publication was found, try to create one."
-      icon={BookOpen}
-      button="Create publication"
+      title={t("title")}
+      description={t("description")}
+      button={t("button")}
       buttonLink="/create"
+      icon={BookOpen}
     />
   );
 };
 
 export const UserProfileEmpty = () => {
+  const t = useTranslations("States.Empty.UserProfile");
   return (
     <EmptyComponent
-      title="No publications"
-      description="Seems like this user has no any publications."
+      title={t("title")}
+      description={t("description")}
       icon={BookOpen}
+    />
+  );
+};
+
+export const LibraryEmpty = () => {
+  const t = useTranslations("States.Empty.Library");
+  return (
+    <EmptyComponent
+      title={t("title")}
+      description={t("description")}
+      button={t("button")}
+      buttonLink="/create"
+      icon={GalleryHorizontalEnd}
     />
   );
 };

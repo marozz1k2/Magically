@@ -3,8 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { useSubscribe, useUnsubscribe } from "@/hooks/useProfile";
 import { UserAttributes } from "@/types";
+import { useTranslations } from "next-intl";
 
 export const FollowButton = (user: UserAttributes) => {
+  const t = useTranslations("Components.FollowButton")
   const subscribeMutation = useSubscribe();
   const unsubscribeMutation = useUnsubscribe();
 
@@ -18,7 +20,7 @@ export const FollowButton = (user: UserAttributes) => {
       onClick={() => handleFollowToggle(user)}
       disabled={subscribeMutation.isPending || unsubscribeMutation.isPending}
     >
-      {user.isFollowing ? "Unfollow" : "Follow"}
+      {user.isFollowing ? t("Unfollow") : t("Follow")}
     </Button>
   );
 };

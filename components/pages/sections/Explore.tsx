@@ -1,21 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
-import { PublicationCard } from "@/components/shared/publication/PublicationCard";
-import { ExploreEmpty } from "@/components/states/empty/Empty";
-import { ExploreError, NotAuthorized } from "@/components/states/error/Error";
-import { ExploreLoader } from "@/components/states/loaders/Loaders";
-import { Button } from "@/components/ui/button";
 import { useUser } from "@/hooks/useAuth";
 import { usePublications } from "@/hooks/usePublications";
+
+import { Button } from "@/components/ui/button";
+import { ExploreEmpty } from "@/components/states/empty/Empty";
+import { ExploreLoader } from "@/components/states/loaders/Loaders";
 import { ShootingStars } from "@/components/ui/magic/shooting-stars";
 import { StarsBackground } from "@/components/ui/magic/stars-background";
+import { ExploreError, NotAuthorized } from "@/components/states/error/Error";
+import { PublicationCard } from "@/components/shared/publication/PublicationCard";
 
 export const Explore = () => {
   const { data: user, isError } = useUser();
-  const t = useTranslations("Home");
   const { theme } = useTheme();
   const [filters, setFilters] = useState({ sortBy: "newest", hashtag: "" });
 
@@ -58,8 +57,6 @@ export const Explore = () => {
 
       {/* --- Scrollable content --- */}
       <div className="relative z-10 w-full h-full section-padding">
-        <h1 className="title-text mt-4 mb-8">Publications</h1>
-
         <div className="grid-4 mt-4 gap-6">
           {data?.pages.map((page) =>
             page.publications.map((publication: any) => (
@@ -72,7 +69,7 @@ export const Explore = () => {
           )}
         </div>
 
-        {data?.pages[0].publications.length === 0 && <ExploreEmpty />}
+        {data?.pages[0].publications.length === 0 && <div className="!h-screen state-center"><ExploreEmpty /></div>}
 
         {hasNextPage && (
           <div className="flex justify-center mt-8">
@@ -83,17 +80,17 @@ export const Explore = () => {
         )}
 
         {!user && (
-          <div className="state-center mt-10">
+          <div className="!h-screen state-center">
             <NotAuthorized />
           </div>
         )}
         {user && isError && (
-          <div className="state-center mt-10">
+          <div className="!h-screen state-center">
             <ExploreError />
           </div>
         )}
         {user && isLoading && (
-          <div className="mt-10">
+          <div>
             <ExploreLoader />
           </div>
         )}

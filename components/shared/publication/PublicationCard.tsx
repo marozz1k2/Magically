@@ -47,17 +47,17 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
         </Link>
         <div
           className="absolute hidden md:flex bottom-0 left-0 right-0 bg-white/20 dark:bg-black/20 
-                    text-white p-4 text-xs rounded-b-lg rounded-t-3xl opacity-0 backdrop-blur-3xl 
-                      group-hover:opacity-100 magic-transition"
+             text-white p-4 text-xs rounded-b-lg rounded-t-3xl opacity-0 backdrop-blur-3xl 
+             translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200 ease-in"
         >
           <div className="flex flex-col items-start justify-center gap-4 px-4">
             <UserProfile {...publication.author} />
             <div className="flex items-center justify-start gap-4 mt-2">
               <LikeButton {...publication} />
-              <button className="flex items-center justify-center bg-none hover:bg-transparent p-0 magic-transition gap-1">
-                <MessageCircle className="size-5 hover:text-white hover:fill-white stroke-1" />
+              <div className="flex items-center justify-center bg-none hover:bg-transparent p-0 transition-all gap-1">
+                <MessageCircle className="size-5 stroke-1" />
                 <span>{publication.commentCount}</span>
-              </button>
+              </div>
               {publication.author.id === userId ? (
                 <PublicationActions publicationId={publication.id} initialContent={publication.content} />
               ) : (
@@ -65,15 +65,19 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
               )}
             </div>
           </div>
-          <SubscribeButton publication={publication} style="glass" className={`${userId === publication.author.id ? 'hidden' : 'block'}`} />
+          <SubscribeButton
+            publication={publication}
+            style="glass"
+            className={`${userId === publication.author.id ? 'hidden' : 'block'}`}
+          />
         </div>
-        <div className="flex md:hidden flex-col items-start justify-center gap-2 px-4">
+        <div className="flex md:hidden flex-col items-start justify-center gap-2 px-2">
           <div className="flex items-center justify-start gap-4 mt-2">
             <LikeButton {...publication} />
-            <button className="flex items-center justify-center bg-none hover:bg-transparent p-0 magic-transition gap-1">
-              <MessageCircle className="size-5 hover:text-white hover:fill-white stroke-1" />
+            <Link href={`/publications/${publication.id}`} key={publication.id} className="flex items-center justify-center bg-none p-0 magic-transition gap-1">
+              <MessageCircle className="size-5 stroke-1" />
               <span>{publication.commentCount}</span>
-            </button>
+            </Link>
             {publication.author.id === userId ? (
               <PublicationActions publicationId={publication.id} initialContent={publication.content} />
             ) : (

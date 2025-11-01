@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+
+import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Bolt, ForwardIcon, Pencil } from "lucide-react";
+import { Cog, ForwardIcon, Pencil } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { EditProfileDialog } from "@/components/shared/user/EditProfileDialog";
@@ -21,7 +22,7 @@ import { useMyProfile } from "@/hooks/useProfile";
 import { API_URL, BASE_URL } from "@/lib/api";
 
 export const Profile = () => {
-  const t = useTranslations("Profile");
+  const t = useTranslations("Pages.Profile");
   const pathname = usePathname();
   const { data: user, isLoading, isError } = useMyProfile();
   const [editProfileOpen, setEditProfileOpen] = useState(false);
@@ -45,12 +46,12 @@ export const Profile = () => {
   };
 
   return (
-    <section className="section-padding container max-w-7xl mx-auto border-0 md:border h-full rounded-t-2xl mt-0 sm:mt-4">
+    <section className="section-padding container max-w-7xl mx-auto border-0 md:border border-muted h-full rounded-t-3xl mt-0 sm:mt-4">
       <div className="flex items-center justify-between my-4 px-2 md:px-4">
-        <h1 className="title-text">{t("Title")}</h1>
+        <h1 className="title-text">{t("title")}</h1>
         <div className="flex items-center justify-center gap-1">
           <Link href="/settings" className="ease hover:bg-muted p-2 rounded-md">
-            <Bolt />
+            <Cog />
           </Link>
         </div>
       </div>
@@ -61,13 +62,13 @@ export const Profile = () => {
         </div>
         <p className="text-sm text-muted-foreground break-words mt-6">{user.bio}</p>
         <div className="flex items-center gap-2 text-muted-foreground mt-4">
-          <p className="text-md">Ваши токены:</p>
-          <span className="text-md">✦ {user.tokens}</span>
+          <p className="text-sm">{t("tokens")}</p>
+          <span className="text-sm">✦ {user.tokens}</span>
         </div>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 text-muted-foreground">
-          <span className="text-md w-40">Ваша активность:</span>
-          <div className="flex items-center w-full mt-1">
-            <Progress value={user.dailyActions.count * 10} className="w-full max-w-[150px]" />
+        <div className="flex flex-row items-center gap-3 text-muted-foreground">
+          <div className="flex text-sm w-auto">{t("activity")}</div>
+          <div className="flex flex-1 items-center w-full mt-1">
+            <Progress value={user.dailyActions.count * 10} className="w-full max-w-[75px] lg:max-w-[150px]" />
             <span className="px-2 w-16 text-sm text-muted-foreground text-center">{user.dailyActions.count} / 10</span>
           </div>
         </div>
@@ -76,7 +77,7 @@ export const Profile = () => {
         <div onClick={copyLink} className="flex items-center justify-center w-full">
           <ConfettiButton className="w-full btn-outline">
             <ForwardIcon />
-            Поделиться профилем
+            {t("share")}
           </ConfettiButton>
         </div>
         <div className="w-full">
@@ -84,7 +85,7 @@ export const Profile = () => {
             <DialogTrigger asChild>
               <Button className="w-full btn-login">
                 <Pencil />
-                Редактировать профиль
+                {t("edit")}
               </Button>
             </DialogTrigger>
             <EditProfileDialog user={user} setOpen={setEditProfileOpen} />
@@ -94,15 +95,15 @@ export const Profile = () => {
       <Separator className="bg-muted my-4" />
       <div className="flex items-center justify-around gap-4 secondary-text">
         <div className="text-center">
-          <h3 className="font-semibold text-sm">{t("UserInfo.Publications")}</h3>
+          <h3 className="font-semibold text-sm">{t("publications")}</h3>
           <p className="text-xs">{user.publicationsCount}</p>
         </div>
         <Link href="/profile/followers" className="text-center">
-          <h3 className="font-semibold text-sm">{t("UserInfo.Followers")}</h3>
+          <h3 className="font-semibold text-sm">{t("followers")}</h3>
           <p className="text-xs">{user.followersCount === undefined ? 0 : user.followersCount}</p>
         </Link>
         <Link href="/profile/following" className="text-center">
-          <h3 className="font-semibold text-sm">{t("UserInfo.Following")}</h3>
+          <h3 className="font-semibold text-sm">{t("following")}</h3>
           <p className="text-xs">{user.followingCount === undefined ? 0 : user.followingCount}</p>
         </Link>
       </div>
@@ -112,16 +113,16 @@ export const Profile = () => {
           <PersonalProfileEmpty />
         </div>
       )}
-      <div className="grid-3">
+      <div className="grid-3-mobile">
         {user.publications.map((pub: any) => (
-          <Link href={`/publications/${pub.id}`} key={pub.id} className="w-full">
+          <Link href={`/publications/${pub.id}`} key={pub.id} className="w-full border-1 border-white dark:border-black">
             {pub.imageUrl && (
               <Image
                 src={`${API_URL}${pub.imageUrl}`}
                 width={1024}
                 height={1024}
                 alt="pub"
-                className="rounded-xl object-cover aspect-square"
+                className="rounded-none object-cover aspect-square"
               />
             )}
             {pub.videoUrl && (

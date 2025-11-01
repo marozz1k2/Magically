@@ -1,7 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+
+import { useUser } from "@/hooks/useAuth";
+import { useTranslations } from "next-intl";
+import { usePublication } from "@/hooks/usePublications";
 
 import { ChevronLeft, MessageCircle } from "lucide-react";
 import { CommentSection } from "@/components/shared/publication/CommentSection";
@@ -11,12 +15,11 @@ import { SubscribeButton } from "@/components/shared/publication/SubscribeButton
 import { UserProfile } from "@/components/shared/user/UserProfile";
 import { ExploreError, NotAuthorized } from "@/components/states/error/Error";
 import { ExploreLoader } from "@/components/states/loaders/Loaders";
-import { useUser } from "@/hooks/useAuth";
-import { usePublication } from "@/hooks/usePublications";
 import { API_URL } from "@/lib/api";
 import { formatDate } from "@/lib/utils";
 
 export const Publication = ({ publicationId }: { publicationId: string }) => {
+  const t = useTranslations("Components.PublicationActions");
   const { data: user } = useUser();
   const { data: publication, isLoading, isError } = usePublication(publicationId);
 
@@ -41,7 +44,7 @@ export const Publication = ({ publicationId }: { publicationId: string }) => {
       <div className="fixed md:hidden h-12 backdrop-blur-2xl w-full top-0 left-0 right-0 text-sm z-10">
         <Link href="/" className="flex items-center justify-start h-full ml-2 link-text">
           <ChevronLeft className="size-4 " />
-          <span>Back to explore</span>
+          <span>{t("back")}</span>
         </Link>
       </div>
       <div className="flex flex-col items-start justify-start gap-4 mt-12 md:mt-4">

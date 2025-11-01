@@ -1,20 +1,36 @@
 "use client";
 
 import { useState } from "react";
-import { EllipsisVertical, MoreHorizontal, Pencil, Trash } from "lucide-react";
-import { toast } from "sonner";
+import { useTranslations } from "next-intl";
+import {
+  useDeletePublication,
+  useUpdatePublication
+} from "@/hooks/usePublications";
 
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+
+import {
+  EllipsisVertical,
+  Pencil,
+  Trash
+} from "lucide-react";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle
+} from "@/components/ui/dialog";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useDeletePublication, useUpdatePublication } from "@/hooks/usePublications";
 
 interface PublicationActionsProps {
   publicationId: string;
@@ -22,6 +38,8 @@ interface PublicationActionsProps {
 }
 
 export const PublicationActions = ({ publicationId, initialContent }: PublicationActionsProps) => {
+  const t = useTranslations("Components.PublicationActions");
+
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [content, setContent] = useState(initialContent);
@@ -29,10 +47,9 @@ export const PublicationActions = ({ publicationId, initialContent }: Publicatio
   const updatePublication = useUpdatePublication();
   const deletePublication = useDeletePublication();
 
-  // --- РЕДАКТИРОВАНИЕ ---
   const handleUpdate = () => {
     if (!content.trim()) {
-      toast.error("Введите текст публикации");
+      toast.error(t("enter"));
       return;
     }
 
@@ -46,7 +63,6 @@ export const PublicationActions = ({ publicationId, initialContent }: Publicatio
     );
   };
 
-  // --- УДАЛЕНИЕ ---
   const handleDelete = () => {
     deletePublication.mutate(publicationId, {
       onSuccess: () => {
@@ -57,7 +73,6 @@ export const PublicationActions = ({ publicationId, initialContent }: Publicatio
 
   return (
     <div className="flex items-center">
-      {/* Dropdown menu */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon">
@@ -66,24 +81,23 @@ export const PublicationActions = ({ publicationId, initialContent }: Publicatio
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={() => setEditOpen(true)}>
-            <Pencil className="size-4 mr-2" /> Редактировать
+            <Pencil className="size-4 mr-2" /> {t("edit")}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setDeleteOpen(true)} className="text-destructive">
-            <Trash className="size-4 mr-2" /> Удалить
+            <Trash className="size-4 mr-2" /> {t("delete.title")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* --- Диалог редактирования --- */}
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle className="mt-4">Редактировать публикацию</DialogTitle>
+            <DialogTitle className="mt-4">{t("title")}</DialogTitle>
           </DialogHeader>
 
           <div className="flex flex-col gap-4 py-2">
             <Textarea
-              placeholder="Введите текст публикации..."
+              placeholder={t("enter")}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               className="min-h-[60px]"
@@ -92,30 +106,29 @@ export const PublicationActions = ({ publicationId, initialContent }: Publicatio
 
           <DialogFooter>
             <Button variant="outline" onClick={() => setEditOpen(false)} className="btn-outline">
-              Отмена
+              {t("cancel")}
             </Button>
             <Button onClick={handleUpdate} disabled={updatePublication.isPending} className="btn-solid">
-              {updatePublication.isPending ? "Сохраняем..." : "Сохранить"}
+              {updatePublication.isPending ? t("button.saving") : t("button.save")}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* --- Диалог удаления --- */}
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Удалить публикацию?</DialogTitle>
+            <DialogTitle>{t("confirm")}</DialogTitle>
           </DialogHeader>
 
-          <p className="text-sm text-muted-foreground">Это действие необратимо. Публикация будет удалена навсегда.</p>
+          <p className="text-sm text-muted-foreground">{t("confirmText")}</p>
 
           <DialogFooter>
             <Button variant="outline" onClick={() => setDeleteOpen(false)}>
-              Отмена
+              {t("cancel")}
             </Button>
             <Button variant="destructive" onClick={handleDelete} disabled={deletePublication.isPending}>
-              {deletePublication.isPending ? "Удаляем..." : "Удалить"}
+              {deletePublication.isPending ? t("delete.deleting") : t("delete.title")}
             </Button>
           </DialogFooter>
         </DialogContent>

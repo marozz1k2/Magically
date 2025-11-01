@@ -1,5 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 import React, {
     useState,
     useEffect,
@@ -26,13 +27,14 @@ interface StarBackgroundProps {
 }
 
 export const StarsBackground: React.FC<StarBackgroundProps> = ({
-    starDensity = 0.00015,
+    starDensity = 0.00030,
     allStarsTwinkle = true,
-    twinkleProbability = 0.7,
-    minTwinkleSpeed = 0.5,
+    twinkleProbability = 0.79,
+    minTwinkleSpeed = 0.7,
     maxTwinkleSpeed = 1,
     className,
 }) => {
+    const { theme } = useTheme();
     const [stars, setStars] = useState<StarProps[]>([]);
     const canvasRef: RefObject<HTMLCanvasElement> =
         useRef<HTMLCanvasElement>(null!);
@@ -114,7 +116,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
             stars.forEach((star) => {
                 ctx.beginPath();
                 ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+                ctx.fillStyle = `${theme === "dark" ? `rgba(255, 255, 255, ${star.opacity})` : `rgba(0, 0, 0, ${star.opacity})`}`;
                 ctx.fill();
 
                 if (star.twinkleSpeed !== null) {

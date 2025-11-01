@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
+
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { Compass, Home, Library, LibraryBig, Search, Sparkles, UserRound } from "lucide-react";
+import { Compass, Library, Search, Sparkles, UserRound } from "lucide-react";
 
 export const Bottombar = () => {
   const pathname = usePathname();
@@ -63,7 +64,7 @@ export const Bottombar = () => {
   }, [prevScrollPos]);
 
   const bottomBarStyle = {
-    transform: isBottomBarVisible ? "translateY(0)" : "translateY(110%)",
+    transform: isBottomBarVisible ? "translateY(0)" : "translateY(115%)",
     transition: "transform 0.3s ease-in-out",
   };
 
@@ -78,8 +79,7 @@ export const Bottombar = () => {
             <Link
               href={item.url}
               key={item.id}
-              className={`relative flex flex-col items-center gap-4 rounded-lg p-2 font-thin
-                                ${pathname === item.url ? "btn-magic" : ""}`}
+              className={`relative flex flex-col items-center gap-4 rounded-lg p-2 font-thin ${pathname === item.url ? "btn-magic" : ""}`}
             >
               <item.icon strokeWidth={1.25} className="size-5" />
             </Link>

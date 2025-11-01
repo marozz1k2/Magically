@@ -64,49 +64,167 @@
       }
     }
   },
-  "Create": {
-    "Title": "Create",
-    "Options": {
-      "Option1": "Photo set with 4 images",
-      "Option2": "Photo set with 10 images",
-      "Option3": "Image to image",
-      "Option4": "Text to image"
+  "States": {
+    "Empty": {
+      "Publications": {
+        "title": "No publications",
+        "description": "Seems like there is no publications, be first, create one!",
+        "button": "Create"
+      },
+      "SearchUser": {
+        "title": "User wasn't found",
+        "description": "No users was found with this username, try another one."
+      },
+      "SearchPublication": {
+        "title": "Publication wasn't found",
+        "description": "No publication was found with this data, try another one."
+      },
+      "PersonalProfile": {
+        "title": "Nothing was found",
+        "description": "No publication was found, try to create one.",
+        "button": "Create publication"
+      },
+      "UserProfile": {
+        "title": "No publications",
+        "description": "Seems like this user has no any publications."
+      },
+      "Library": {
+        "title": "No item in gallery",
+        "description": "No items was found in gallery, try to create one.",
+        "button": "Add to gallery"
+      }
+    },
+    "Error": {
+      "NotAuthorized": {
+        "title": "Seems like you're not authorized",
+        "description": "You need to log in to see content",
+        "register": "Register",
+        "login": "Log in"
+      },
+      "Explore": {
+        "title": "Error loading content",
+        "description": "Unknown error while fetching publications. Try to refresh your browser or login again."
+      },
+      "Search": {
+        "title": "Error searching content",
+        "description": "Unknown error while search. Try to refresh your browser or login again."
+      },
+      "Profile": {
+        "title": "Error fetching profile",
+        "description": "Unknown error while fetching your profile. Try to refresh your browser or login again."
+      },
+      "Following": {
+        "title": "Error loading followings",
+        "description": "Unable to load following list. Try to refresh your browser or login again."
+      },
+      "Followers": {
+        "title": "Error loading followers",
+        "description": "Unable to load followers list. Try to refresh your browser or login again."
+      },
+      "Library": {
+        "title": "Error loading gallery",
+        "description": "Unable to load gallery. Try to refresh your browser or login again."
+      }
     }
   },
-  "Home": {
-    "Title": "Home",
-    "Buttons": {
-      "Login": "Login",
-      "Register": "Register"
+  "Pages": {
+    "Explore": {},
+    "Search": {
+      "title": "Search",
+      "search": "Search users and publications",
+      "users": "Users",
+      "publications": "Publications"
+    },
+    "Create": {},
+    "Library": {
+      "title": "Library",
+      "search": "Search by prompt",
+      "newest": "Newest",
+      "oldest": "Oldest"
+    },
+    "Profile": {
+      "title": "Profile",
+      "publications": "Publications",
+      "followers": "Followers",
+      "following": "Followings",
+      "tokens": "Your tokens",
+      "activity": "Your activity",
+      "share": "Share with profile",
+      "edit": "Edit profile"
+    },
+    "Settings": {
+      "BackToProfile": "Profile",
+      "Title": "Settings",
+      "Language": "Change the language",
+      "Theme": "Change the theme",
+      "Logout": "Logout from account"
     }
   },
-  "Library": {
-    "Title": "Your library"
-  },
-  "Navbar": {
-    "Home": "Home",
-    "Search": "Search",
-    "Create": "Create",
-    "Library": "Library",
-    "Profile": "Profile"
-  },
-  "Profile": {
-    "Title": "Profile",
-    "UserInfo": {
-      "Publications": "Publications",
-      "Followers": "Followers",
-      "Following": "Following"
+  "Components": {
+    "Sidebar": {
+      "Explore": "Explore",
+      "Search": "Search",
+      "Create": "Create",
+      "Library": "Library",
+      "Profile": "Profile"
+    },
+    "EditProfile": {
+      "title": "Edit Profile",
+      "fullname": "Full name",
+      "bio": "Bio",
+      "button": {
+        "save": "Save",
+        "saving": "Saving"
+      }
+    },
+    "NavUser": {
+      "Settings": "Settings",
+      "Edit": "Edit profile",
+      "Logout": "Log out"
+    },
+    "Followers": {
+      "title": "Followers",
+      "empty": "No followers"
+    },
+    "Following": {
+      "title": "Following",
+      "empty": "No followings"
+    },
+    "FollowButton": {
+      "Follow": "Follow",
+      "Unfollow": "Unfollow"
+    },
+    "CommentSection": {
+      "title": "Comments",
+      "empty": "No comments yet, be first!",
+      "response": {
+        "for": "Response for",
+        "write": "Write response..."
+      },
+      "comment": "Write comment...",
+      "commentary": "Comment",
+      "commentaries": "Comments"
+    },
+    "PublicationActions": {
+      "back": "Back to explore",
+      "title": "Edit publication",
+      "edit": "Edit",
+      "delete": {
+        "title": "Delete",
+        "deleting": "Deleting..."
+      },
+      "enter": "Enter publication text...",
+      "cancel": "Cancel",
+      "button": {
+        "save": "Save",
+        "saving": "Saving..."
+      },
+      "confirm": "Delete publication?",
+      "confirmText": "This action is not recoverable, publication will be deleted forever."
+    },
+    "Theme": {
+      "dark": "Dark theme",
+      "light": "Light theme"
     }
-  },
-  "Search": {
-    "Title": "Search",
-    "Placeholder": "Search for images..."
-  },
-  "Settings": {
-    "BackToProfile": "Profile",
-    "Title": "Settings",
-    "Language": "Change the language",
-    "Theme": "Change the theme",
-    "Logout": "Logout from account"
   }
 }

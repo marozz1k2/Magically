@@ -1,16 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
 
+import { useTranslations } from "next-intl";
+import { useMyFollowers } from "@/hooks/useProfile";
+
+import { UserAttributes } from "@/types";
+import { ChevronLeft } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 import { UserCard } from "@/components/shared/user/UserCard";
 import { FollowersError } from "@/components/states/error/Error";
 import { ListLoader } from "@/components/states/loaders/Loaders";
-import { Separator } from "@/components/ui/separator";
-import { useMyFollowers } from "@/hooks/useProfile";
-import { UserAttributes } from "@/types";
 
 export const Followers = () => {
+  const t = useTranslations("Components.Followers")
   const { data, isLoading, isError } = useMyFollowers();
 
   if (isLoading) return <ListLoader />;
@@ -27,7 +30,7 @@ export const Followers = () => {
         <Link href="/profile" className="secondary-hover magic-transition rounded-md">
           <ChevronLeft />
         </Link>
-        <h1 className="text-xl sm:text-2xl font-semibold">Подписчики</h1>
+        <h1 className="text-xl sm:text-2xl font-semibold">{t("title")}</h1>
       </div>
 
       <Separator orientation="horizontal" className="my-2" />
@@ -36,7 +39,7 @@ export const Followers = () => {
         {data.length > 0 ? (
           data.map((user: UserAttributes) => <UserCard key={user.id} user={user} />)
         ) : (
-          <p className="text-center text-muted-foreground py-4">Нет подписок</p>
+          <p className="text-center text-muted-foreground py-4">{t("empty")}</p>
         )}
       </div>
     </section>

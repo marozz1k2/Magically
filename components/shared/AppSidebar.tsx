@@ -1,8 +1,25 @@
 "use client";
 
 import Link from "next/link";
+
+import { useUser } from "@/hooks/useAuth";
+import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { CircleUserRound, Compass, Globe, Library, Search, Sparkles, UserRound } from "lucide-react";
+import { ThemeSwitcher } from "../functions/ThemeSwitcher";
+import { LanguageSwitcher } from "../functions/LanguageSwitcher";
+
+import { NavUser } from "./user/NavUser";
+import { AuroraText } from "../ui/magic/aurora-text";
+
+import {
+  CircleUserRound,
+  Compass,
+  Globe,
+  Library,
+  Search,
+  Sparkles,
+  UserRound
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -15,44 +32,40 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useUser } from "@/hooks/useAuth";
-import { LanguageSwitcher } from "../functions/LanguageSwitcher";
-import { ThemeSwitcher } from "../functions/ThemeSwitcher";
-import { AuroraText } from "../ui/magic/aurora-text";
-import { NavUser } from "./user/NavUser";
 
 export function AppSidebar() {
+  const t = useTranslations("Components.Sidebar");
   const pathname = usePathname();
   const { data: user, isLoading, isError } = useUser();
 
   const items = [
     {
       id: 1,
-      title: "Explore",
+      title: t("Explore"),
       url: "/",
       icon: Compass,
     },
     {
       id: 2,
-      title: "Search",
+      title: t("Search"),
       url: "/search",
       icon: Search,
     },
     {
       id: 3,
-      title: "Create",
+      title: t("Create"),
       url: "/create",
       icon: Sparkles,
     },
     {
       id: 4,
-      title: "Library",
+      title: t("Library"),
       url: "/library",
       icon: Library,
     },
     {
       id: 5,
-      title: "Profile",
+      title: t("Profile"),
       url: "/profile",
       icon: UserRound,
     },
@@ -120,4 +133,4 @@ export function AppSidebar() {
       </SidebarFooter>
     </Sidebar>
   );
-}
+};

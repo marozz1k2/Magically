@@ -1,31 +1,33 @@
 import Link from "next/link";
-import { CircleUserRound, Globe, SearchX, TriangleAlert, UserLock, UserRoundX, Users } from "lucide-react";
-
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
+import { CircleUserRound, GalleryHorizontalEnd, Globe, SearchX, TriangleAlert, UserLock, UserRoundX, Users } from "lucide-react";
 
 export const NotAuthorized = () => {
+  const t = useTranslations("States.Error.NotAuthorized");
+
   return (
     <Empty>
       <EmptyHeader>
         <EmptyMedia variant="icon">
           <UserLock />
         </EmptyMedia>
-        <EmptyTitle>Seems like you're not authorized</EmptyTitle>
-        <EmptyDescription>You need to log in to see content</EmptyDescription>
+        <EmptyTitle>{t("title")}</EmptyTitle>
+        <EmptyDescription>{t("description")}</EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
         <div className="flex gap-2">
           <Link href="/register">
             <Button variant="outline" className="btn-outline">
               <CircleUserRound />
-              <span>Register</span>
+              <span>{t("register")}</span>
             </Button>
           </Link>
           <Link href="/login">
             <Button className="btn-solid">
               <Globe />
-              <span>Log In</span>
+              <span>{t("login")}</span>
             </Button>
           </Link>
         </div>
@@ -60,51 +62,73 @@ export const ErrorComponent = ({
 };
 
 export const ExploreError = () => {
+  const t = useTranslations("State.Error.Explore");
+
   return (
     <ErrorComponent
-      title="Error loading content"
-      description="Unknown error while fetching your profile. Try to refresh your browser or login again."
+      title={t("title")}
+      description={t("description")}
       icon={TriangleAlert}
     />
   );
 };
 
 export const SearchError = () => {
+  const t = useTranslations("State.Error.Search");
+
   return (
     <ErrorComponent
-      title="Error searching content"
-      description="Unknown error while fetching your profile. Try to refresh your browser or login again."
+      title={t("title")}
+      description={t("description")}
       icon={SearchX}
     />
   );
 };
 
 export const ProfileError = () => {
+  const t = useTranslations("State.Error.Profile");
+
   return (
     <ErrorComponent
-      title="Error fetching profile"
-      description="Unknown error while fetching your profile. Try to refresh your browser or login again."
+      title={t("title")}
+      description={t("description")}
       icon={UserRoundX}
     />
   );
 };
 
 export const FollowingError = () => {
+  const t = useTranslations("State.Error.Following");
+
   return (
     <ErrorComponent
-      title="Error loading followings"
-      description="Unable to load following list. Try to refresh your browser or login again."
+      title={t("title")}
+      description={t("description")}
       icon={Users}
     />
   );
 };
 
 export const FollowersError = () => {
+  const t = useTranslations("State.Error.Followers");
+
   return (
     <ErrorComponent
-      title="Error loading followers"
-      description="Unable to load followers list. Try to refresh your browser or login again."
+      title={t("title")}
+      description={t("description")}
       icon={Users}
+    />
+  );
+};
+
+export const LibraryError = () => {
+  const t = useTranslations("State.Error.Library");
+
+  return (
+    <ErrorComponent
+      title={t("title")}
+      description={t("description")}
+      icon={GalleryHorizontalEnd}
     />
   );
 };

@@ -1,18 +1,27 @@
 "use client";
 
-import { Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { useTranslations } from "next-intl";
+import { UserAttributes } from "@/types";
+import {
+  useUpdateAvatar,
+  useUpdateProfile
+} from "@/hooks/useProfile";
 
+import { toast } from "sonner";
+import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useUpdateAvatar, useUpdateProfile } from "@/hooks/useProfile";
-import { UserAttributes } from "@/types";
 import { UserAvatar } from "./UserAvatar";
+import {
+  DialogContent,
+  DialogHeader,
+  DialogTitle
+} from "@/components/ui/dialog";
 
 export const EditProfileDialog = ({ user, setOpen }: { user: UserAttributes; setOpen: (open: boolean) => void }) => {
+  const t = useTranslations("Components.EditProfile")
   const { register, handleSubmit } = useForm({
     defaultValues: {
       fullname: user.fullname,
@@ -47,7 +56,7 @@ export const EditProfileDialog = ({ user, setOpen }: { user: UserAttributes; set
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Edit Profile</DialogTitle>
+        <DialogTitle>{t("title")}</DialogTitle>
       </DialogHeader>
       <div className="flex flex-col items-center gap-4">
         <label htmlFor="avatar-upload" className="cursor-pointer relative">
@@ -60,15 +69,15 @@ export const EditProfileDialog = ({ user, setOpen }: { user: UserAttributes; set
       </div>
       <form onSubmit={handleSubmit(onProfileSubmit)} className="space-y-4">
         <div className="flex flex-col gap-2">
-          <label>Full Name</label>
+          <label>{t("fullname")}</label>
           <Input {...register("fullname")} />
         </div>
         <div className="flex flex-col gap-2">
-          <label>Bio</label>
+          <label>{t("bio")}</label>
           <Textarea {...register("bio")} />
         </div>
         <Button type="submit" disabled={updateProfileMutation.isPending} className="w-full mt-2 btn-solid">
-          {updateProfileMutation.isPending ? "Saving..." : "Save Changes"}
+          {updateProfileMutation.isPending ? t("button.saving") : t("button.save")}
         </Button>
       </form>
     </DialogContent>

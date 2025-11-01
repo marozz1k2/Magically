@@ -15,7 +15,7 @@ import { useUser } from "@/hooks/useAuth";
 import { useSearch } from "@/hooks/useSearch";
 
 export const Search = () => {
-  const t = useTranslations("Search");
+  const t = useTranslations("Pages.Search");
   const [filters, setFilters] = useState({ query: "", type: "all", sortBy: "newest" });
   const [debouncedQuery] = useDebounceValue(filters.query, 500);
 
@@ -28,26 +28,23 @@ export const Search = () => {
 
   return (
     <section className="flex flex-col container mx-auto section-padding">
-      {/* Title */}
-      <h1 className="title-text my-6">{t("Title")}</h1>
+      <h1 className="title-text my-6">{t("title")}</h1>
       <div className="flex gap-4">
         <Input
-          placeholder="Search users, publications, prompts..."
+          placeholder={t("search")}
           className="w-full rounded-full placeholder:px-1"
           value={filters.query}
           onChange={(e: any) => setFilters((prev) => ({ ...prev, query: e.target.value }))}
         />
       </div>
-      {/* Search Results */}
       <Tabs defaultValue="users">
         <TabsList className="w-full mt-2">
-          <TabsTrigger value="users">Users</TabsTrigger>
-          <TabsTrigger value="publications">Publications</TabsTrigger>
+          <TabsTrigger value="users">{t("users")}</TabsTrigger>
+          <TabsTrigger value="publications">{t("publications")}</TabsTrigger>
         </TabsList>
         <TabsContent value="users" className="space-y-2 mt-4">
           {searchResults?.users.length > 0 && (
             <>
-              <h2 className="mb-2 subtitle-text">Users</h2>
               {searchResults.users.map((user: any) => (
                 <UserCard key={user.id} user={user} />
               ))}
@@ -60,8 +57,7 @@ export const Search = () => {
         <TabsContent value="publications" className="space-y-4 mt-4">
           {searchResults?.publications.length > 0 && (
             <>
-              <h2 className="mb-6 subtitle-text">Publications</h2>
-              <div className="grid-2 gap-4">
+              <div className="grid-3 gap-4">
                 {searchResults.publications.map((pub: any) => (
                   <PublicationCard key={pub.id} publication={pub} />
                 ))}
@@ -74,7 +70,7 @@ export const Search = () => {
         </TabsContent>
       </Tabs>
       {/* States Handler */}
-      <div className="flex items-center justify-center w-full h-full">
+      <div className="flex flex-col items-center justify-center w-full h-full">
         {!user && (
           <div className="state-center">
             <NotAuthorized />

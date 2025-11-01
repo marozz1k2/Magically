@@ -179,7 +179,7 @@
   }
 
   .link-text {
-    @apply text-purple-600 dark:text-purple-500;
+    @apply text-purple-600 dark:text-purple-500 hover:underline;
   }
 
   .title-text {
@@ -244,6 +244,10 @@
 
   .grid-2 {
     @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  }
+
+  .grid-3-mobile {
+    @apply grid grid-cols-3 gap-0;
   }
 }
 
