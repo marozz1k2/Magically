@@ -30,7 +30,7 @@ export const Effects = () => {
                     <div className="p-2 font-mono">
                         <h1 className="text-xl font-bold">{t("PhotoEffects.title")}</h1>
 
-                        <ul className="font-thin text-xs text-neutral-700 dark:text-neutral-500 mt-4 space-y-1">
+                        <ul className="font-thin text-xs mt-4 space-y-1">
                             <li>- {t("PhotoEffects.restoration")}</li>
                             <li>- {t("PhotoEffects.art")}</li>
                             <li>- {t("PhotoEffects.style")}</li>
@@ -61,7 +61,7 @@ export const Effects = () => {
                     <div className="p-2 font-mono">
                         <h1 className="text-xl font-bold">{t("VideoEffects.title")}</h1>
 
-                        <ul className="font-thin text-xs text-neutral-700 dark:text-neutral-500 mt-4 space-y-1">
+                        <ul className="font-thin text-xs mt-4 space-y-1">
                             <li>- {t("VideoEffects.camera")}</li>
                             <li>- {t("VideoEffects.visual")}</li>
                         </ul>
@@ -87,7 +87,7 @@ export const Effects = () => {
                     <div className="p-2 font-mono">
                         <h1 className="text-xl font-bold">{t("PhotoEditor.title")}</h1>
 
-                        <ul className="font-thin text-xs text-neutral-700 dark:text-neutral-500 mt-4 space-y-1">
+                        <ul className="font-thin text-xs mt-4 space-y-1">
                             <li>- {t("PhotoEditor.angle")}</li>
                         </ul>
                     </div>

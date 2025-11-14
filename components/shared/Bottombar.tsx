@@ -23,6 +23,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { MagicButton } from "../ui/magic/magic-button";
 
 export const Bottombar = () => {
   const t = useTranslations("Components.Sidebar");
@@ -97,11 +98,11 @@ export const Bottombar = () => {
           item.id === 3 ? (
             <DropdownMenu key={item.id}>
               <DropdownMenuTrigger asChild>
-                <item.icon strokeWidth={1.25} className="size-5" />
+                <MagicButton icon={item.icon} />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="p-3 backdrop-blur-xl mx-auto bg-white/90 dark:bg-black/20" align="start">
                 <DropdownMenuLabel>{t("Create")}</DropdownMenuLabel>
-                <DropdownMenuSeparator/>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem className="mt-2 py-2">
                   <Link href="/create/magic-photo" className="flex items-center justify-between gap-2">
                     <Wand />
