@@ -1,16 +1,17 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { MessageCircle } from "lucide-react";
+import Image from "next/image";
 
 import { API_URL } from "@/lib/api";
 import { formatDate } from "@/lib/utils";
 import { Publication } from "@/types";
-import { UserProfile } from "../user/UserProfile";
 import { LikeButton } from "./LikeButton";
-import { PublicationActions } from "./PublicationActions";
+import { VideoRender } from "./VideoRender";
+import { MessageCircle } from "lucide-react";
+import { UserProfile } from "../user/UserProfile";
 import { SubscribeButton } from "./SubscribeButton";
+import { PublicationActions } from "./PublicationActions";
 
 type PublicationCardProps = {
   publication: Publication;
@@ -23,16 +24,17 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
     <div className="flex flex-col items-start justify-center gap-2">
       <div className="flex justify-between md:hidden w-full">
         <UserProfile {...publication.author} />
+        {publication.author.id === userId ? (
+          <PublicationActions publicationId={publication.id} initialContent={publication.content} />
+        ) : (
+          ""
+        )}
       </div>
       <div className="relative w-full group">
-        <Link href={`/publications/${publication.id}`} key={publication.id}>
+        <div key={publication.id}>
           {publication.videoUrl && (
-            <video
+            <VideoRender
               src={`${API_URL}${publication.videoUrl}`}
-              autoPlay
-              loop
-              muted
-              playsInline
               className="rounded-xl object-cover aspect-square w-full"
             />
           )}
@@ -45,20 +47,20 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
               className="rounded-xl object-cover aspect-square w-full"
             />
           )}
-        </Link>
+        </div>
         <div
           className="absolute hidden md:flex bottom-0 left-0 right-0 bg-white/20 dark:bg-black/20 
-             text-white p-4 text-xs rounded-b-lg rounded-t-3xl opacity-0 backdrop-blur-3xl 
+             text-white px-4 py-6 text-xs rounded-b-lg rounded-t-3xl opacity-0 backdrop-blur-3xl 
              translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200 ease-in"
         >
           <div className="flex flex-col items-start justify-center gap-4 px-4">
             <UserProfile {...publication.author} />
             <div className="flex items-center justify-start gap-4 mt-2">
               <LikeButton {...publication} />
-              <div className="flex items-center justify-center bg-none hover:bg-transparent p-0 transition-all gap-1">
+              <Link href={`/publications/${publication.id}`} className="flex items-center justify-center bg-none hover:bg-transparent p-0 transition-all gap-1">
                 <MessageCircle className="size-5 stroke-1" />
                 <span>{publication.commentCount}</span>
-              </div>
+              </Link>
               {publication.author.id === userId ? (
                 <PublicationActions publicationId={publication.id} initialContent={publication.content} />
               ) : (
@@ -79,11 +81,6 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
               <MessageCircle className="size-5 stroke-1" />
               <span>{publication.commentCount}</span>
             </Link>
-            {publication.author.id === userId ? (
-              <PublicationActions publicationId={publication.id} initialContent={publication.content} />
-            ) : (
-              ""
-            )}
           </div>
           <div className="my-1">{publication.content}</div>
           <div className="text-sm secondary-text mb-4">{formatDate(publication.createdAt)}</div>

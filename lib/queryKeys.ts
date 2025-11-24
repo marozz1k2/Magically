@@ -4,6 +4,7 @@ export const queryKeys = {
     all: ["auth"] as const,
     me: () => [...queryKeys.auth.all, "me"] as const,
   },
+  
   // user
   users: {
     all: ["users"] as const,
@@ -11,11 +12,13 @@ export const queryKeys = {
     followers: (username: string) => [...queryKeys.users.all, "followers", username] as const,
     following: (username: string) => [...queryKeys.users.all, "following", username] as const,
   },
+
   // Search
   search: {
     all: ["search"] as const,
     query: (filters: any) => [...queryKeys.search.all, "query", filters] as const,
   },
+
   // Publications
   publications: {
     all: ["publications"] as const,
@@ -34,5 +37,17 @@ export const queryKeys = {
   gallery: {
     all: ["gallery"] as const,
     list: (filters: any) => [...queryKeys.gallery.all, "list", filters] as const,
+  },
+
+  // Recommendations
+  recommendations: {
+    all: ["recommendations"] as const,
+    users: (limit: number) => [...queryKeys.recommendations.all, "users", limit] as const,
+  },
+
+  // Higgsfield
+  higgsfield: {
+    all: ["higgsfield"] as const,
+    motions: () => [...queryKeys.higgsfield.all, "motions"] as const,
   },
 } as const;

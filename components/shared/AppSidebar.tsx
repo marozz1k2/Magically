@@ -22,6 +22,7 @@ import {
   Search,
   Sparkles,
   UserRound,
+  Video,
   Wand
 } from "lucide-react";
 
@@ -122,10 +123,17 @@ export function AppSidebar() {
                             <div />
                           </Link>
                         </SidebarMenuButton>
-                        <SidebarMenuButton asChild className="p-[12px] mb-1 rounded-full text-md magic-transition">
-                          <Link href="/create/effects" className="btn-magic-secondary flex items-center justify-between">
+                        <SidebarMenuButton asChild className="p-[12px] rounded-full text-md magic-transition">
+                          <Link href="/create/photo-effects" className="btn-magic-secondary flex items-center justify-between">
                             <Loader />
-                            <span className="font-semibold">{t("Effects")}</span>
+                            <span className="font-semibold">{t("Effects.PhotoEffects")}</span>
+                            <div />
+                          </Link>
+                        </SidebarMenuButton>
+                        <SidebarMenuButton asChild className="p-[12px] mb-1 rounded-full text-md magic-transition">
+                          <Link href="/create/video-effects" className="btn-magic-secondary flex items-center justify-between">
+                            <Video />
+                            <span className="font-semibold">{t("Effects.VideoEffects")}</span>
                             <div />
                           </Link>
                         </SidebarMenuButton>

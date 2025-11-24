@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
-import { CircleUserRound, GalleryHorizontalEnd, Globe, SearchX, TriangleAlert, UserLock, UserRoundX, Users } from "lucide-react";
+import { CircleUserRound, GalleryHorizontalEnd, Globe, SearchX, TriangleAlert, UserLock, UserRoundX, Users, Video } from "lucide-react";
 
 export const NotAuthorized = () => {
   const t = useTranslations("States.Error.NotAuthorized");
@@ -62,7 +62,7 @@ export const ErrorComponent = ({
 };
 
 export const ExploreError = () => {
-  const t = useTranslations("State.Error.Explore");
+  const t = useTranslations("States.Error.Explore");
 
   return (
     <ErrorComponent
@@ -74,7 +74,7 @@ export const ExploreError = () => {
 };
 
 export const SearchError = () => {
-  const t = useTranslations("State.Error.Search");
+  const t = useTranslations("States.Error.Search");
 
   return (
     <ErrorComponent
@@ -86,7 +86,7 @@ export const SearchError = () => {
 };
 
 export const ProfileError = () => {
-  const t = useTranslations("State.Error.Profile");
+  const t = useTranslations("States.Error.Profile");
 
   return (
     <ErrorComponent
@@ -98,7 +98,7 @@ export const ProfileError = () => {
 };
 
 export const FollowingError = () => {
-  const t = useTranslations("State.Error.Following");
+  const t = useTranslations("States.Error.Following");
 
   return (
     <ErrorComponent
@@ -110,7 +110,7 @@ export const FollowingError = () => {
 };
 
 export const FollowersError = () => {
-  const t = useTranslations("State.Error.Followers");
+  const t = useTranslations("States.Error.Followers");
 
   return (
     <ErrorComponent
@@ -122,7 +122,7 @@ export const FollowersError = () => {
 };
 
 export const LibraryError = () => {
-  const t = useTranslations("State.Error.Library");
+  const t = useTranslations("States.Error.Library");
 
   return (
     <ErrorComponent
@@ -132,3 +132,15 @@ export const LibraryError = () => {
     />
   );
 };
+
+export const HiggsfieldMotionError = () => {
+  const t = useTranslations("States.Error.HiggsfieldMotion");
+
+  return (
+    <ErrorComponent
+      title={t("title")}
+      description={t("description")}
+      icon={Video}
+    />
+  );
+}

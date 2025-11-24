@@ -1,10 +1,11 @@
 "use client";
 
-import { use, useState } from "react";
+import { useState } from "react";
 import { useUser } from "@/hooks/useAuth";
 import { useTranslations } from "next-intl";
-import { useSearch } from "@/hooks/useSearch";
 import { useDebounceValue } from "usehooks-ts";
+import { usePublications } from "@/hooks/usePublications";
+import { useSearch, useRecommendedUsers } from "@/hooks/useSearch";
 
 import { SearchIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -15,6 +16,7 @@ import { PublicationCardSimplified } from "@/components/shared/publication/Publi
 import { SearchPublicationEmpty, SearchUserEmpty } from "@/components/states/empty/Empty";
 import { ExploreError, NotAuthorized, SearchError } from "@/components/states/error/Error";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 
 export const Search = () => {
   const t = useTranslations("Pages.Search");
@@ -28,6 +30,19 @@ export const Search = () => {
     isError: isSearchError,
   } = useSearch({ ...filters, query: debouncedQuery });
 
+  // Рекомендации при пустом поиске
+  const { data: recommendedUsers, isLoading: isLoadingRecommended } = useRecommendedUsers(
+    !debouncedQuery
+  );
+  const {
+    data: feedData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = usePublications({ sortBy: "newest" });
+
+  const isEmptySearch = !debouncedQuery;
+
   return (
     <section className="flex flex-col container mx-auto section-padding">
       <h1 className="title-text my-6">{t("title")}</h1>
@@ -40,38 +55,90 @@ export const Search = () => {
           onChange={(e: any) => setFilters((prev) => ({ ...prev, query: e.target.value }))}
         />
       </div>
-      <Tabs defaultValue="users">
-        <TabsList className="w-full mt-2">
-          <TabsTrigger value="users">{t("users")}</TabsTrigger>
-          <TabsTrigger value="publications">{t("publications")}</TabsTrigger>
-        </TabsList>
-        <TabsContent value="users" className="space-y-2 mt-4">
-          {searchResults?.users.length > 0 && (
-            <>
-              {searchResults.users.map((user: any) => (
-                <UserCard key={user.id} user={user} />
-              ))}
-            </>
-          )}
-          {searchResults && searchResults.users.length === 0 && (
-            <SearchUserEmpty />
-          )}
-        </TabsContent>
-        <TabsContent value="publications" className="space-y-4 mt-4">
-          {searchResults?.publications.length > 0 && (
-            <>
-              <div className="grid grid-cols-3 gap-0 grid-flow-dense auto-rows-auto">
-                {searchResults.publications.map((pub: any, id: any) => (
-                  <PublicationCardSimplified key={pub.id} publication={pub} id={id} />
+
+      {isEmptySearch ? (
+        // Показываем рекомендации при пустом поиске
+        <Tabs defaultValue="users" className="w-full">
+          <TabsList className="w-full mt-2">
+            <TabsTrigger value="users">{t("recommended")}</TabsTrigger>
+            <TabsTrigger value="publications">{t("publications")}</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="users" className="space-y-2 mt-4">
+            {isLoadingRecommended ? (
+              <SearchLoader />
+            ) : recommendedUsers && recommendedUsers.length > 0 ? (
+              <>
+                <p className="text-xs text-muted-foreground mb-4">{t("recommendedDescription")}</p>
+                {recommendedUsers.map((user: any) => (
+                  <UserCard key={user.id} user={user} />
                 ))}
-              </div>
-            </>
-          )}
-          {searchResults && searchResults.publications.length === 0 && (
-            <SearchPublicationEmpty />
-          )}
-        </TabsContent>
-      </Tabs>
+              </>
+            ) : (
+              <SearchUserEmpty />
+            )}
+          </TabsContent>
+
+          <TabsContent value="publications" className="space-y-4 mt-4">
+            {feedData?.pages && feedData.pages[0]?.publications.length > 0 ? (
+              <>
+                <div className="grid grid-cols-3 gap-0 grid-flow-dense auto-rows-auto">
+                  {feedData.pages.map((page) =>
+                    page.publications.map((pub: any, id: any) => (
+                      <PublicationCardSimplified key={pub.id} publication={pub} id={id} />
+                    ))
+                  )}
+                </div>
+                {hasNextPage && (
+                  <div className="flex justify-center mt-4">
+                    <Button
+                      onClick={() => fetchNextPage()}
+                      disabled={isFetchingNextPage}
+                      variant="outline"
+                    >
+                      {isFetchingNextPage ? t("loading") : t("loadMore")}
+                    </Button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <SearchPublicationEmpty />
+            )}
+          </TabsContent>
+        </Tabs>
+      ) : (
+        <Tabs defaultValue="users">
+          <TabsList className="w-full mt-2">
+            <TabsTrigger value="users">{t("users")}</TabsTrigger>
+            <TabsTrigger value="publications">{t("publications")}</TabsTrigger>
+          </TabsList>
+          <TabsContent value="users" className="space-y-2 mt-4">
+            {searchResults?.users.length > 0 ? (
+              <>
+                {searchResults.users.map((user: any) => (
+                  <UserCard key={user.id} user={user} />
+                ))}
+              </>
+            ) : (
+              <SearchUserEmpty />
+            )}
+          </TabsContent>
+          <TabsContent value="publications" className="space-y-4 mt-4">
+            {searchResults?.publications.length > 0 ? (
+              <>
+                <div className="grid grid-cols-3 gap-0 grid-flow-dense auto-rows-auto">
+                  {searchResults.publications.map((pub: any, id: any) => (
+                    <PublicationCardSimplified key={pub.id} publication={pub} id={id} />
+                  ))}
+                </div>
+              </>
+            ) : (
+              <SearchPublicationEmpty />
+            )}
+          </TabsContent>
+        </Tabs>
+      )}
+
       {/* States Handler */}
       <div className="flex flex-col items-center justify-center w-full h-full">
         {!user && (

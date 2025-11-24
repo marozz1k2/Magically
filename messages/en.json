@@ -129,6 +129,10 @@
       "Library": {
         "title": "Error loading gallery",
         "description": "Unable to load gallery. Try to refresh your browser or login again."
+      },
+      "HiggsfieldMotion": {
+        "title": "Error loading video effects",
+        "description": "Unable to load video effects. Try to refresh your browser or login again."
       }
     }
   },
@@ -136,9 +140,13 @@
     "Explore": {},
     "Search": {
       "title": "Search",
-      "search": "Search users and publications",
+      "search": "Search users and publications...",
       "users": "Users",
-      "publications": "Publications"
+      "publications": "Publications",
+      "recommended": "Recommended",
+      "recommendedDescription": "Users you might like",
+      "loading": "Loading...",
+      "loadMore": "Load more"
     },
     "Library": {
       "title": "Library",
@@ -180,7 +188,11 @@
       },
       "PhotoEditor": {
         "title": "Photo editor",
-        "angle": "Photo angle"
+        "description": "Change the angle of your images"
+      },
+      "PhotoGenerate": {
+        "title": "Custom request",
+        "description": "Custom generation based on your prompt"
       }
     }
   },
@@ -194,7 +206,10 @@
       "Login": "Log In",
       "Register": "Register",
       "MagicPhoto": "Magic photo",
-      "Effects": "Effects"
+      "Effects": {
+        "VideoEffects": "Video effects",
+        "PhotoEffects": "Photo effects"
+      }
     },
     "EditProfile": {
       "title": "Profile management",

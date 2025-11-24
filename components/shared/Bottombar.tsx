@@ -13,6 +13,7 @@ import {
   Search,
   Sparkles,
   UserRound,
+  Video,
   Wand
 } from "lucide-react";
 import {
@@ -111,9 +112,16 @@ export const Bottombar = () => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="mt-2 py-2">
-                  <Link href="/create/effects" className="flex items-center justify-between gap-2">
+                  <Link href="/create/photo-effects" className="flex items-center justify-between gap-2">
                     <Loader />
-                    <span className="font-semibold">{t("Effects")}</span>
+                    <span className="font-semibold">{t("Effects.PhotoEffects")}</span>
+                    <div />
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="mt-2 py-2">
+                  <Link href="/create/video-effects" className="flex items-center justify-between gap-2">
+                    <Video />
+                    <span className="font-semibold">{t("Effects.VideoEffects")}</span>
                     <div />
                   </Link>
                 </DropdownMenuItem>

@@ -1,17 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Icon } from "@/components/ui/magic/everhault-card";
+
 import { useTranslations } from "next-intl";
+import { Icon } from "@/components/ui/magic/everhault-card";
 
 export const Effects = () => {
     const t = useTranslations("Pages.Effects");
 
     return (
-        <section className="flex flex-col flex-wrap container mx-auto max-w-6xl rounded-t-2xl px-2 mt-4">
-            <h1 className="title-text">{t("title")}</h1>
+        <section className="flex flex-col flex-wrap container mx-auto max-w-6xl px-3">
+            <h1 className="title-text mt-4">{t("title")}</h1>
             <div className="grid-3 gap-4 mt-6">
                 <Link
-                    href="/create/effects/photo-effects"
+                    href="/create/photo-effects/effects"
                     className="border border-black/[0.2] dark:border-white/[0.2] flex flex-col items-start w-full p-2 relative"
                 >
                     <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
@@ -39,7 +40,30 @@ export const Effects = () => {
                     </div>
                 </Link>
                 <Link
-                    href="/create/effects/video-effects"
+                    href="/create/photo-effects/editor"
+                    className="border border-black/[0.2] dark:border-white/[0.2] flex flex-col items-start w-full p-2 relative"
+                >
+                    <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
+                    <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-white text-black" />
+                    <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-white text-black" />
+                    <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-white text-black" />
+
+                    <Image
+                        src="/effects/3.jpg"
+                        alt="3"
+                        width={1024}
+                        height={1024}
+                        className="rounded-xl"
+                    />
+
+                    <div className="p-2 font-mono">
+                        <h1 className="text-xl font-bold">{t("PhotoEditor.title")}</h1>
+                        <p className="font-thin text-xs mt-4 space-y-1">{t("PhotoEditor.description")}</p>
+
+                    </div>
+                </Link>
+                <Link
+                    href="/create/photo-effects/generate"
                     className="border border-black/[0.2] dark:border-white/[0.2] flex flex-col items-start w-full p-2 relative"
                 >
                     <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
@@ -59,37 +83,8 @@ export const Effects = () => {
                     </video>
 
                     <div className="p-2 font-mono">
-                        <h1 className="text-xl font-bold">{t("VideoEffects.title")}</h1>
-
-                        <ul className="font-thin text-xs mt-4 space-y-1">
-                            <li>- {t("VideoEffects.camera")}</li>
-                            <li>- {t("VideoEffects.visual")}</li>
-                        </ul>
-                    </div>
-                </Link>
-                <Link
-                    href="/create/effects/photo-editor"
-                    className="border border-black/[0.2] dark:border-white/[0.2] flex flex-col items-start w-full p-2 relative"
-                >
-                    <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
-                    <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-white text-black" />
-                    <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-white text-black" />
-                    <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-white text-black" />
-
-                    <Image
-                        src="/effects/3.jpg"
-                        alt="3"
-                        width={1024}
-                        height={1024}
-                        className="rounded-xl"
-                    />
-
-                    <div className="p-2 font-mono">
-                        <h1 className="text-xl font-bold">{t("PhotoEditor.title")}</h1>
-
-                        <ul className="font-thin text-xs mt-4 space-y-1">
-                            <li>- {t("PhotoEditor.angle")}</li>
-                        </ul>
+                        <h1 className="text-xl font-bold">{t("PhotoGenerate.title")}</h1>
+                        <p className="font-thin text-xs mt-4 space-y-1">{t("PhotoGenerate.description")}</p>
                     </div>
                 </Link>
             </div>

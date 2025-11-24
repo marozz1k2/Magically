@@ -7,16 +7,17 @@ import { useUser } from "@/hooks/useAuth";
 import { useTranslations } from "next-intl";
 import { usePublication } from "@/hooks/usePublications";
 
-import { ChevronLeft, MessageCircle } from "lucide-react";
-import { CommentSection } from "@/components/shared/publication/CommentSection";
-import { LikeButton } from "@/components/shared/publication/LikeButton";
-import { PublicationActions } from "@/components/shared/publication/PublicationActions";
-import { SubscribeButton } from "@/components/shared/publication/SubscribeButton";
-import { UserProfile } from "@/components/shared/user/UserProfile";
-import { ExploreError, NotAuthorized } from "@/components/states/error/Error";
-import { PublicationLoader } from "@/components/states/loaders/Loaders";
 import { API_URL } from "@/lib/api";
 import { formatDate } from "@/lib/utils";
+import { ChevronLeft, MessageCircle } from "lucide-react";
+import { UserProfile } from "@/components/shared/user/UserProfile";
+import { LikeButton } from "@/components/shared/publication/LikeButton";
+import { PublicationLoader } from "@/components/states/loaders/Loaders";
+import { VideoRender } from "@/components/shared/publication/VideoRender";
+import { ExploreError, NotAuthorized } from "@/components/states/error/Error";
+import { CommentSection } from "@/components/shared/publication/CommentSection";
+import { SubscribeButton } from "@/components/shared/publication/SubscribeButton";
+import { PublicationActions } from "@/components/shared/publication/PublicationActions";
 
 export const Publication = ({ publicationId }: { publicationId: string }) => {
   const t = useTranslations("Components.PublicationActions");
@@ -52,12 +53,8 @@ export const Publication = ({ publicationId }: { publicationId: string }) => {
           <SubscribeButton publication={publication} style="login" className={`${user.id === publication.author.id ? 'hidden' : 'block'}`} />
         </div>
         {publication.videoUrl ? (
-          <video
+          <VideoRender
             src={`${API_URL}${publication.videoUrl}`}
-            autoPlay
-            loop
-            muted
-            playsInline
             className="rounded-xl object-cover aspect-square w-full"
           />
         ) : (
