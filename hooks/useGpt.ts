@@ -6,12 +6,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 const generateGptImage = async (formData: FormData) => {
     const { data } = await api.post("/gpt/generate", formData, {
         headers: { "Content-Type": "multipart/form-data" },
+        timeout: 900000
     });
-    return data;
-};
-
-const processGptImage = async (values: { publish: boolean; historyId: string }) => {
-    const { data } = await api.post("/gpt/process-image", values);
     return data;
 };
 
@@ -20,27 +16,14 @@ export const useGenerateGptImage = () => {
     return useMutation({
         mutationFn: generateGptImage,
         onSuccess: (data) => {
-            toast.success("Image generation started!");
-            queryClient.invalidateQueries({ queryKey: queryKeys.history.all });
+            toast.success("Image generated and saved!");
+            queryClient.invalidateQueries({ queryKey: queryKeys.gallery.all });
+            queryClient.invalidateQueries({ queryKey: queryKeys.publications.all });
+            queryClient.invalidateQueries({ queryKey: ["user"] });
             return data;
         },
         onError: (err: any) => {
             toast.error(err?.response?.data?.message || "Generation failed");
-        },
-    });
-};
-
-export const useProcessGptImage = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: processGptImage,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: queryKeys.gallery.all });
-            queryClient.invalidateQueries({ queryKey: queryKeys.publications.all });
-            toast.success("Image processed successfully!");
-        },
-        onError: (err: any) => {
-            toast.error(err?.response?.data?.message || "Processing failed");
         },
     });
 };

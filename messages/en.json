@@ -183,16 +183,72 @@
       },
       "VideoEffects": {
         "title": "Video effects",
-        "camera": "Camera control",
-        "visual": "Visual effects"
+        "description": "Create astonishing videos from your images",
+        "Prompt": {
+          "title": "Prompt",
+          "placeholder": "Describe video you want to generate",
+          "message": "Detailed description helps generate better results"
+        },
+        "Quality": {
+          "title": "Model",
+          "placeholder": "Select model quality",
+          "lite": "Lite (faster, lower quality)",
+          "standard": "Standard (balanced)",
+          "turbo": "Turbo (slower, higher quality)"
+        },
+        "Image": {
+          "title": "Images (1-2 images)",
+          "message": "Upload 1 start frame or 2 frames (start + end)"
+        },
+        "Publish": {
+          "title": "Publish to feed",
+          "description": "If unchecked, image will be saved to your private library."
+        },
+        "Generate": {
+          "title": "Generate",
+          "action": "Generation..."
+        }
       },
       "PhotoEditor": {
         "title": "Photo editor",
-        "description": "Change the angle of your images"
+        "description": "Change the angle of your images",
+        "LowAngle": "Low angle",
+        "LongShot": "Long shot",
+        "FromAHeight": "From a height",
+        "FromBack": "From back",
+        "Profile": "Profile",
+        "AntiBlur": "Anti blur"
       },
       "PhotoGenerate": {
         "title": "Custom request",
-        "description": "Custom generation based on your prompt"
+        "description": "Custom generation based on your prompt",
+        "PhotoEffects": "Photo effects",
+        "Prompt": {
+          "title": "Prompt",
+          "placeholder": "A girl sitting in front of mirror..."
+        },
+        "Aspect": {
+          "title": "Aspect Ratio",
+          "1:1": "1:1 Square",
+          "16:9": "16:9 Landscape",
+          "9:16": "9:16 Portrait",
+          "4:3": "4:3"
+        },
+        "referenceImage": "Reference image(optional)",
+        "Publish": {
+          "title": "Publish to feed",
+          "description": "If unchecked, image will be saved to your private library."
+        },
+        "Generate": {
+          "title": "Generate",
+          "action": "Generation..."
+        },
+        "LowAngle": "Low angle",
+        "LongShot": "Long shot",
+        "FromAHeight": "From a height",
+        "FromBack": "From back",
+        "Profile": "Profile",
+        "AntiBlur": "Anti blur"
       }
     }
   },

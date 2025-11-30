@@ -47,11 +47,11 @@ export const Explore = () => {
     <section className="relative w-full min-h-screen overflow-hidden">
       {/* --- Stars Layer --- */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
-        <StarsBackground className="!h-full !w-full opacity-100" />
+        <StarsBackground className="h-full! w-full! opacity-100" />
         <ShootingStars
           starColor={starColor}
           trailColor={trailColor}
-          className="!h-full !w-full"
+          className="h-full! w-full!"
         />
       </div>
 
@@ -69,7 +69,7 @@ export const Explore = () => {
           )}
         </div>
 
-        {data?.pages[0].publications.length === 0 && <div className="!h-screen state-center"><ExploreEmpty /></div>}
+        {data?.pages[0].publications.length === 0 && <div className="h-screen! state-center"><ExploreEmpty /></div>}
 
         {hasNextPage && (
           <div className="flex justify-center mt-8">
@@ -80,12 +80,12 @@ export const Explore = () => {
         )}
 
         {!user && (
-          <div className="!h-screen state-center">
+          <div className="h-screen! state-center">
             <NotAuthorized />
           </div>
         )}
         {user && isError && (
-          <div className="!h-screen state-center">
+          <div className="h-screen! state-center">
             <ExploreError />
           </div>
         )}

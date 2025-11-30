@@ -213,19 +213,19 @@
   }
 
   .btn-login {
-    @apply !bg-lime-300 !border-lime-300/50 !text-lime-950 dark:!bg-lime-400 dark:!text-lime-950 cursor-pointer;
+    @apply bg-lime-300! border-lime-300/50! text-lime-950! dark:bg-lime-400! dark:text-lime-950! cursor-pointer;
   }
 
   .btn-outline {
-    @apply !bg-lime-300/50 !border-lime-300/70 !text-lime-950 dark:!bg-lime-800/20 dark:!text-lime-500 dark:!border-lime-800/50 !border cursor-pointer;
+    @apply bg-lime-300/50! border-lime-300/70! text-lime-950! dark:bg-lime-800/20! dark:text-lime-500! dark:border-lime-800/50! border! cursor-pointer;
   }
 
   .btn-solid {
-    @apply !bg-lime-300 !border-lime-300 !text-lime-950 dark:!bg-lime-400 !border shadow-lime-800/10 !shadow-xl cursor-pointer;
+    @apply bg-lime-300! border-lime-300! text-lime-950! dark:bg-lime-400! border! shadow-lime-800/10 shadow-xl! cursor-pointer;
   }
 
   .btn-glass {
-    @apply !bg-white/20 dark:!bg-black/20 !backdrop-blur-lg !border-none hover:!bg-none !text-white cursor-pointer;
+    @apply bg-white/20! dark:bg-black/20! backdrop-blur-lg! border-none! hover:bg-none! text-white! cursor-pointer;
   }
 
   .btn-magic-secondary {

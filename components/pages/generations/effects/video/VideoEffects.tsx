@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { useUser } from "@/hooks/useAuth";
+import { useTranslations } from "next-intl";
 import { ExploreLoader } from "@/components/states/loaders/Loaders";
 import {
   HiggsMotion,
@@ -15,6 +16,7 @@ import {
 } from "@/components/states/error/Error";
 
 export const VideoEffects = () => {
+  const t = useTranslations("Pages.Effects.VideoEffects")
   const { data: user } = useUser();
   const { data: motions, isLoading, isError } = useHiggsfieldMotions();
 
@@ -38,7 +40,7 @@ export const VideoEffects = () => {
 
   return (
     <section className="flex flex-col section-padding ">
-      <h1 className="title-text my-4">Видеоэффекты</h1>
+      <h1 className="title-text my-4">{t("title")}</h1>
       <div className="grid-4 gap-6!">
         {motions?.map((motion: HiggsMotion) => (
           <Link

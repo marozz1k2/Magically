@@ -1,21 +1,23 @@
 "use client";
 
-import { z } from "zod";
 import Link from "next/link";
+
+import { z } from "zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronLeft, Loader2 } from "lucide-react";
+import { useGenerateHiggsfieldVideo } from "@/hooks/useHiggsfield";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ChevronLeft, Loader2 } from "lucide-react";
 import { UploadImage } from "@/components/shared/create/UploadImage";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from "@/components/ui/form";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { useGenerateHiggsfieldVideo } from "@/hooks/useHiggsfield";
 
 const formSchema = z.object({
     prompt: z.string().min(10, "Prompt must be at least 10 characters"),
@@ -23,11 +25,13 @@ const formSchema = z.object({
     enhance_prompt: z.boolean().default(false).optional(),
     seed: z.number().optional(),
     images: z.array(z.instanceof(File)).min(1, "At least 1 image required").max(2, "Maximum 2 images allowed"),
+    publish: z.boolean(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 export const GenerateVideo = ({ motionId }: { motionId: string }) => {
+    const t = useTranslations("Pages.Effects.VideoEffects");
     const router = useRouter();
     const generateVideo = useGenerateHiggsfieldVideo();
     const [loading, setLoading] = useState(false);
@@ -39,6 +43,7 @@ export const GenerateVideo = ({ motionId }: { motionId: string }) => {
             model: "standard",
             enhance_prompt: false,
             images: [],
+            publish: false,
         },
     });
 
@@ -50,6 +55,7 @@ export const GenerateVideo = ({ motionId }: { motionId: string }) => {
             formData.append("motion_id", motionId);
             formData.append("model", values.model);
             formData.append("enhance_prompt", String(values.enhance_prompt));
+            formData.append("publish", String(values.publish));
             if (values.seed) formData.append("seed", String(values.seed));
 
             values.images.forEach((file) => {
@@ -69,18 +75,18 @@ export const GenerateVideo = ({ motionId }: { motionId: string }) => {
     };
 
     return (
-        <section className="section-padding max-w-3xl mx-auto">
+        <section className="max-w-3xl mx-auto">
             <div className="fixed md:hidden h-12 backdrop-blur-2xl w-full top-0 left-0 right-0 text-sm z-10">
-                <Link href="/create/video-effects" className="flex items-center justify-start h-full ml-2 link-text">
+                <Link href="/create/video-effects" className="flex items-center justify-start h-full ml-4 link-text">
                     <ChevronLeft className="size-4" />
-                    <span>Video Effects</span>
+                    <span>{t("title")}</span>
                 </Link>
             </div>
 
             <Card className="bg-transparent shadow-none border-none mt-8 md:mt-0">
                 <CardHeader>
-                    <CardTitle className="title-text">Generate Video with Higgsfield</CardTitle>
-                    <CardDescription>Create AI-powered video from your images</CardDescription>
+                    <CardTitle className="title-text">{t("title")}</CardTitle>
+                    <CardDescription>{t("description")}</CardDescription>
                 </CardHeader>
 
                 <CardContent>
@@ -91,16 +97,16 @@ export const GenerateVideo = ({ motionId }: { motionId: string }) => {
                                 name="prompt"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Prompt</FormLabel>
+                                        <FormLabel>{t("Prompt.title")}</FormLabel>
                                         <FormControl>
                                             <Textarea
-                                                placeholder="Describe the video you want to generate..."
+                                                placeholder={t("Prompt.placeholder")}
                                                 className="min-h-[100px]"
                                                 {...field}
                                             />
                                         </FormControl>
                                         <FormDescription>
-                                            Detailed description helps generate better results
+                                            {t("Prompt.message")}
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
@@ -112,17 +118,17 @@ export const GenerateVideo = ({ motionId }: { motionId: string }) => {
                                 name="model"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Quality Model</FormLabel>
+                                        <FormLabel>{t("Quality.title")}</FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl>
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder="Select model quality" />
+                                                    <SelectValue placeholder={t("Quality.placeholder")} />
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                <SelectItem value="lite">Lite (Faster, Lower Quality)</SelectItem>
-                                                <SelectItem value="standard">Standard (Balanced)</SelectItem>
-                                                <SelectItem value="turbo">Turbo (Slower, Higher Quality)</SelectItem>
+                                                <SelectItem value="lite">{t("Quality.lite")}</SelectItem>
+                                                <SelectItem value="standard">{t("Quality.standard")}</SelectItem>
+                                                <SelectItem value="turbo">{t("Quality.turbo")}</SelectItem>
                                             </SelectContent>
                                         </Select>
                                         <FormMessage />
@@ -130,34 +136,12 @@ export const GenerateVideo = ({ motionId }: { motionId: string }) => {
                                 )}
                             />
 
-                            {/* <FormField
-                                control={form.control}
-                                name="seed"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Seed (Optional)</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                type="number"
-                                                placeholder="Random seed for reproducibility"
-                                                {...field}
-                                                onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : undefined)}
-                                            />
-                                        </FormControl>
-                                        <FormDescription>
-                                            Leave empty for random generation
-                                        </FormDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            /> */}
-
                             <FormField
                                 control={form.control}
                                 name="images"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Images (1-2 images)</FormLabel>
+                                        <FormLabel>{t("Image.title")}</FormLabel>
                                         <FormControl>
                                             <UploadImage
                                                 imageAmount={2}
@@ -165,9 +149,32 @@ export const GenerateVideo = ({ motionId }: { motionId: string }) => {
                                             />
                                         </FormControl>
                                         <FormDescription>
-                                            Upload 1 start frame or 2 frames (start + end)
+                                            {t("Image.message")}
                                         </FormDescription>
                                         <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="publish"
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                        <FormControl>
+                                            <Checkbox
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                            />
+                                        </FormControl>
+                                        <div className="space-y-1 leading-none">
+                                            <FormLabel>
+                                                {t("Publish.title")}
+                                            </FormLabel>
+                                            <p className="text-sm text-muted-foreground">
+                                                {t("Publish.description")}
+                                            </p>
+                                        </div>
                                     </FormItem>
                                 )}
                             />
@@ -180,10 +187,10 @@ export const GenerateVideo = ({ motionId }: { motionId: string }) => {
                                 {loading || generateVideo.isPending ? (
                                     <>
                                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                        Generating...
+                                        {t("Generate.action")}
                                     </>
                                 ) : (
-                                    "Generate Video"
+                                    t("Generate.title")
                                 )}
                             </Button>
                         </form>
