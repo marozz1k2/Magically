@@ -1,5 +1,5 @@
-import { API_URL } from "@/lib/api";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { API_URL } from "@/lib/api";
 
 type UserAvatarProps = {
   username: string;
@@ -8,12 +8,7 @@ type UserAvatarProps = {
   size?: "sm" | "md" | "lg" | "xl";
 };
 
-export const UserAvatar = ({
-  username,
-  fullname,
-  avatar,
-  size = "md"
-}: UserAvatarProps) => {
+export const UserAvatar = ({ username, fullname, avatar, size = "md" }: UserAvatarProps) => {
   return (
     <Avatar
       className={`

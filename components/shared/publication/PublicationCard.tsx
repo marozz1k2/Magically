@@ -1,26 +1,25 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-
 import { useState } from "react";
-import { API_URL } from "@/lib/api";
-import { Publication } from "@/types";
+import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { formatDate } from "@/lib/utils";
-import { VideoRender } from "./VideoRender";
-
-import { LikeButton } from "./LikeButton";
-import { UserAvatar } from "../user/UserAvatar";
-import { Button } from "@/components/ui/button";
-import { UserProfile } from "../user/UserProfile";
-import { SubscribeButton } from "./SubscribeButton";
-import { Separator } from "@/components/ui/separator";
 import { Dot, Heart, MessageCircle } from "lucide-react";
-import { PublicationActions } from "./PublicationActions";
-import { AuthRequiredPopover } from "./AuthRequiredPopover";
 import { useTranslations } from "next-intl";
+
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { API_URL } from "@/lib/api";
+import { formatDate } from "@/lib/utils";
+import { Publication } from "@/types";
+import { UserAvatar } from "../user/UserAvatar";
+import { UserProfile } from "../user/UserProfile";
+import { AuthRequiredPopover } from "./AuthRequiredPopover";
+import { LikeButton } from "./LikeButton";
+import { PublicationActions } from "./PublicationActions";
 import { PublicationImage } from "./PublicationImage";
+import { SubscribeButton } from "./SubscribeButton";
+import { VideoRender } from "./VideoRender";
 
 type PublicationCardProps = {
   publication: Publication;
@@ -29,7 +28,7 @@ type PublicationCardProps = {
 };
 
 export const PublicationCard = ({ publication, userId }: PublicationCardProps) => {
-  const t = useTranslations("Components.Publication")
+  const t = useTranslations("Components.Publication");
   const [expandedCommentsMap, setExpandedCommentsMap] = useState<Record<string, boolean>>({});
 
   return (
@@ -52,15 +51,19 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
               <article className="mb-2">
                 {publication.content.length > 128 ? (
                   <>
-                    <span className="prompt-text text-tertiary-text">{expandedCommentsMap[publication.id] ? publication.content : `${publication.content.slice(0, 128)}...`}</span>
+                    <span className="prompt-text text-tertiary-text">
+                      {expandedCommentsMap[publication.id]
+                        ? publication.content
+                        : `${publication.content.slice(0, 128)}...`}
+                    </span>
                     <Button
                       variant="link"
                       size="sm"
                       className="px-0 h-auto cursor-pointer text-muted-foreground font-normal"
                       onClick={() => {
-                        setExpandedCommentsMap(prev => ({
+                        setExpandedCommentsMap((prev) => ({
                           ...prev,
-                          [publication.id]: !prev[publication.id]
+                          [publication.id]: !prev[publication.id],
                         }));
                       }}
                     >
@@ -77,12 +80,7 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
                   className="rounded-xl object-cover aspect-square w-full"
                 />
               )}
-              {publication.imageUrl && (
-                <PublicationImage
-                  src={`${API_URL}${publication.imageUrl}`}
-                  alt="publication"
-                />
-              )}
+              {publication.imageUrl && <PublicationImage src={`${API_URL}${publication.imageUrl}`} alt="publication" />}
               <div className="flex items-center justify-start gap-4 mt-2">
                 {userId ? (
                   <LikeButton {...publication} />
@@ -109,20 +107,15 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
           </div>
           <Separator className="mt-4" />
         </div>
-        <div className="hidden md:flex">
+        <Link href={`/publications/${publication.id}`} key={publication.id} className="hidden md:flex">
           {publication.videoUrl && (
             <VideoRender
               src={`${API_URL}${publication.videoUrl}`}
               className="rounded-xl object-cover aspect-square w-full"
             />
           )}
-          {publication.imageUrl && (
-            <PublicationImage
-              src={`${API_URL}${publication.imageUrl}`}
-              alt="publication"
-            />
-          )}
-        </div>
+          {publication.imageUrl && <PublicationImage src={`${API_URL}${publication.imageUrl}`} alt="publication" />}
+        </Link>
         <div
           className="absolute hidden md:flex bottom-0 left-0 right-0 bg-white/20 dark:bg-black/20 
              text-white px-4 py-6 text-xs rounded-b-lg rounded-t-3xl opacity-0 backdrop-blur-3xl 
@@ -142,10 +135,10 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
                 </AuthRequiredPopover>
               )}
               <motion.div whileTap={{ scale: 0.9 }}>
-                <Link href={`/publications/${publication.id}`} key={publication.id} className="flex items-center justify-center p-0 gap-1 hover:text-lime-500 transition-colors">
+                <div className="flex items-center justify-center p-0 gap-1 hover:text-lime-500 transition-colors">
                   <MessageCircle className="size-5 stroke-1" />
                   <span>{publication.commentCount}</span>
-                </Link>
+                </div>
               </motion.div>
               {publication.author.id === userId ? (
                 <PublicationActions publicationId={publication.id} initialContent={publication.content} />
@@ -154,22 +147,16 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
               )}
             </div>
           </div>
-          {userId !== publication.author.id && (
-            userId ? (
-              <SubscribeButton
-                publication={publication}
-                style="glass"
-              />
+          {userId !== publication.author.id &&
+            (userId ? (
+              <SubscribeButton publication={publication} style="glass" />
             ) : (
               <AuthRequiredPopover>
                 <Button className="btn-glass">Subscribe</Button>
               </AuthRequiredPopover>
-            )
-          )}
+            ))}
         </div>
-        <div className="flex md:hidden flex-col items-start justify-center gap-2 px-2">
-
-        </div>
+        <div className="flex md:hidden flex-col items-start justify-center gap-2 px-2"></div>
       </div>
     </div>
   );
@@ -177,7 +164,9 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
 
 export const PublicationCardSimplified = ({ publication, id }: PublicationCardProps) => {
   return (
-    <div className={`border border-white dark:border-black row-span-1 ${id === 3 || id === 6 ? "col-span-2 row-span-2" : "col-span-1"}`}>
+    <div
+      className={`border border-white dark:border-black row-span-1 ${id === 3 || id === 6 ? "col-span-2 row-span-2" : "col-span-1"}`}
+    >
       <div className="relative group">
         <Link href={`/publications/${publication.id}`} key={publication.id}>
           {publication.videoUrl ? (
@@ -190,10 +179,7 @@ export const PublicationCardSimplified = ({ publication, id }: PublicationCardPr
               className="object-cover aspect-square w-full"
             />
           ) : (
-            <PublicationImage
-              src={`${API_URL}${publication.imageUrl}`}
-              alt="publication"
-            />
+            <PublicationImage src={`${API_URL}${publication.imageUrl}`} alt="publication" />
           )}
         </Link>
       </div>

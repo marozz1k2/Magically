@@ -17,8 +17,8 @@ export const PublicationLoader = () => {
       <Skeleton className="w-full aspect-square rounded-lg" />
       <Skeleton className="w-full h-16" />
     </div>
-  )
-}
+  );
+};
 
 export const SearchLoader = () => {
   return Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} className="flex flex-col h-16 w-full mb-2" />);
@@ -57,8 +57,8 @@ export const JobLoader = () => {
       </div>
       <Skeleton className="w-96 h-12" />
     </div>
-  )
-}
+  );
+};
 
 export const ProfileLoader = () => {
   return (

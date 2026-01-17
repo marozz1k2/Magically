@@ -1,23 +1,27 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-
-import { API_URL } from "@/lib/api";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useProfile } from "@/hooks/useProfile";
-import { Separator } from "@/components/ui/separator";
+
 import { UserProfile } from "@/components/shared/user/UserProfile";
 import { UserProfileEmpty } from "@/components/states/empty/Empty";
-import { UserProfileLoader } from "@/components/states/loaders/Loaders";
 import { NotAuthorized, ProfileError } from "@/components/states/error/Error";
+import { UserProfileLoader } from "@/components/states/loaders/Loaders";
+import { Separator } from "@/components/ui/separator";
+import { useProfile } from "@/hooks/useProfile";
+import { API_URL } from "@/lib/api";
 
 export const Profile = ({ username }: { username: string }) => {
   const t = useTranslations("Pages.Profile");
   const { data: user, isLoading, isError } = useProfile(username);
 
   if (!user) {
-    return <div className="state-center section-padding"><NotAuthorized /></div>;
+    return (
+      <div className="state-center section-padding">
+        <NotAuthorized />
+      </div>
+    );
   }
 
   if (user && isLoading) {
@@ -25,7 +29,11 @@ export const Profile = ({ username }: { username: string }) => {
   }
 
   if (user && isError) {
-    return <div className="state-center section-padding"><ProfileError /></div>;
+    return (
+      <div className="state-center section-padding">
+        <ProfileError />
+      </div>
+    );
   }
 
   return (
@@ -65,9 +73,7 @@ export const Profile = ({ username }: { username: string }) => {
                 className="object-cover aspect-square"
               />
             )}
-            {pub.videoUrl && (
-              <video src={`${API_URL}${pub.videoUrl}`} className="object-cover aspect-square" />
-            )}
+            {pub.videoUrl && <video src={`${API_URL}${pub.videoUrl}`} className="object-cover aspect-square" />}
           </Link>
         ))}
       </div>

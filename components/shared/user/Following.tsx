@@ -1,12 +1,13 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { UserCard } from "@/components/shared/user/UserCard";
 import { FollowingError } from "@/components/states/error/Error";
 import { ListLoader } from "@/components/states/loaders/Loaders";
 import { Separator } from "@/components/ui/separator";
 import { useMyFollowing } from "@/hooks/useProfile";
 import { UserAttributes } from "@/types";
-import { useTranslations } from "next-intl";
 
 export const Following = () => {
   const t = useTranslations("Components.Following");

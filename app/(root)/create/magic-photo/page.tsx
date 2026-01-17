@@ -1,7 +1,7 @@
-import { MagicPhoto } from '@/components/pages/generations/models/magic-photo/MagicPhoto';
+import { MagicPhoto } from "@/components/pages/generations/models/magic-photo/MagicPhoto";
 
 const Page = () => {
-    return <MagicPhoto />
+  return <MagicPhoto />;
 };
 
 export default Page;

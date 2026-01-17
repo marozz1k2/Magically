@@ -1,14 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-
 import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Cog, ForwardIcon, Pencil } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { EditProfileDialog } from "@/components/shared/user/EditProfileDialog";
+import { UserAvatar } from "@/components/shared/user/UserAvatar";
 import { PersonalProfileEmpty } from "@/components/states/empty/Empty";
 import { NotAuthorized, ProfileError } from "@/components/states/error/Error";
 import { ProfileLoader } from "@/components/states/loaders/Loaders";
@@ -19,7 +19,6 @@ import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { useMyProfile } from "@/hooks/useProfile";
 import { API_URL, BASE_URL } from "@/lib/api";
-import { UserAvatar } from "@/components/shared/user/UserAvatar";
 
 export const Profile = () => {
   const t = useTranslations("Pages.Profile");
@@ -28,7 +27,11 @@ export const Profile = () => {
   const [editProfileOpen, setEditProfileOpen] = useState(false);
 
   if (!user) {
-    return <div className="state-center section-padding"><NotAuthorized /></div>;
+    return (
+      <div className="state-center section-padding">
+        <NotAuthorized />
+      </div>
+    );
   }
 
   if (user && isLoading) {
@@ -36,7 +39,11 @@ export const Profile = () => {
   }
 
   if (user && isError) {
-    return <div className="state-center section-padding"><ProfileError /></div>;
+    return (
+      <div className="state-center section-padding">
+        <ProfileError />
+      </div>
+    );
   }
 
   const links = BASE_URL + pathname + "/" + user.username;

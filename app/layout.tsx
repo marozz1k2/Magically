@@ -1,13 +1,12 @@
 import { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-
-import { getLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
-
+import { getLocale } from "next-intl/server";
 
 import { RootLayoutProps } from "@/types";
 import { ClientLayout } from "./providers/ClientLayout";
 import { QueryProvider } from "./providers/QueryProvider";
+import { TelegramProvider } from "./providers/TelegramProvider";
 import { ThemeProviders } from "./providers/ThemeProviders";
 
 import "./globals.css";
@@ -36,7 +35,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <QueryProvider>
           <NextIntlClientProvider>
             <ThemeProviders>
-              <ClientLayout>{children}</ClientLayout>
+              <TelegramProvider>
+                <ClientLayout>{children}</ClientLayout>
+              </TelegramProvider>
             </ThemeProviders>
           </NextIntlClientProvider>
         </QueryProvider>

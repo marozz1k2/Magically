@@ -44,11 +44,11 @@ export type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
 
 // Photo Generation
 export const formSchema = z.object({
-    prompt: z.string().min(3, "Prompt is required"),
-    aspect_ratio: z.string(),
-    images: z.array(z.instanceof(File)).optional(),
-    publish: z.boolean(),
-    model_type: z.string()
+  prompt: z.string().min(3, "Prompt is required"),
+  aspect_ratio: z.string(),
+  images: z.array(z.instanceof(File)).optional(),
+  publish: z.boolean(),
+  model_type: z.string(),
 });
 
 export type FormValues = z.infer<typeof formSchema>;

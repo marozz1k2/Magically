@@ -1,24 +1,11 @@
 "use client";
 
-import Link from "next/link";
-
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MagicButton } from "../ui/magic/magic-button";
+import { Brush, Compass, Folder, Loader, Search, Sparkles, TriangleAlert, UserRound, Video, Wand } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
-import {
-  Brush,
-  Compass,
-  Folder,
-  Loader,
-  Search,
-  Sparkles,
-  TriangleAlert,
-  UserRound,
-  Video,
-  Wand
-} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,7 +13,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
+import { MagicButton } from "../ui/magic/magic-button";
 
 export const Bottombar = () => {
   const locale = useLocale();
@@ -114,21 +102,39 @@ export const Bottombar = () => {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="mt-2 py-2">
-                  <Link href="/create/photo-editor" className="flex items-center justify-start gap-2">
-                    <Brush />
-                    <span className="font-semibold">{t("Effects.PhotoEditor")}</span>
+                  <Link href="/" className="btn-magic-secondary flex items-center justify-start relative cursor-not-allowed">
+                    <div className="flex items-center relative gap-1 blur-xs">
+                      <Brush />
+                      <span className="font-semibold">{t("Effects.PhotoEditor")}</span>
+                    </div>
+                    <div className="absolute flex items-center gap-2 text-xs font-bold text-yellow-200">
+                      <TriangleAlert className="size-4 text-yellow-200" />
+                      {t("InDevelopment")}
+                    </div>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="mt-2 py-2">
-                  <Link href="/create/photo-effects" className="flex items-center justify-start gap-2">
-                    <Loader />
-                    <span className="font-semibold">{t("Effects.PhotoEffects")}</span>
+                  <Link href="/" className="btn-magic-secondary flex items-center justify-start relative cursor-not-allowed">
+                    <div className="flex items-center relative gap-1 blur-xs">
+                      <Loader />
+                      <span className="font-semibold">{t("Effects.PhotoEffects")}</span>
+                    </div>
+                    <div className="absolute flex items-center gap-2 text-xs font-bold text-yellow-200">
+                      <TriangleAlert className="size-4 text-yellow-200" />
+                      {t("InDevelopment")}
+                    </div>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="mt-2 py-2">
-                  <Link href="/create/video-effects" className="flex items-center justify-start gap-2">
-                    <Video />
-                    <span className="font-semibold">{t("Effects.VideoEffects")}</span>
+                  <Link href="/" className="btn-magic-secondary flex items-center justify-start relative cursor-not-allowed">
+                    <div className="flex items-center relative gap-1 blur-xs">
+                      <Video />
+                      <span className="font-semibold">{t("Effects.VideoEffects")}</span>
+                    </div>
+                    <div className="absolute flex items-center gap-2 text-xs font-bold text-yellow-200">
+                      <TriangleAlert className="size-4 text-yellow-200" />
+                      {t("InDevelopment")}
+                    </div>
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -139,7 +145,7 @@ export const Bottombar = () => {
               key={item.id}
               className={`relative flex flex-col items-center gap-4 rounded-lg p-2 font-semibold ${pathname === item.url ? "btn-magic" : ""}`}
             >
-              <span className="flex justify-center items-center size-5">{locale === 'ru' ? 'В' : 'M'}</span>
+              <span className="flex justify-center items-center size-5">{locale === "ru" ? "В" : "M"}</span>
             </Link>
           ) : (
             <Link
@@ -152,6 +158,6 @@ export const Bottombar = () => {
           )
         )}
       </div>
-    </nav >
+    </nav>
   );
 };

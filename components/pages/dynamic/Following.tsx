@@ -1,17 +1,16 @@
 "use client";
 
 import Link from "next/link";
-
 import { useParams } from "next/navigation";
-import { useTranslations } from "next-intl";
-import { useUserFollowing } from "@/hooks/useProfile";
-
-import { UserAttributes } from "@/types";
 import { ChevronLeft } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { useTranslations } from "next-intl";
+
 import { UserCard } from "@/components/shared/user/UserCard";
 import { FollowingError } from "@/components/states/error/Error";
 import { ListLoader } from "@/components/states/loaders/Loaders";
+import { Separator } from "@/components/ui/separator";
+import { useUserFollowing } from "@/hooks/useProfile";
+import { UserAttributes } from "@/types";
 
 export const Following = () => {
   const t = useTranslations("Components.Following");

@@ -1,8 +1,19 @@
 import Link from "next/link";
+import {
+  CircleUserRound,
+  GalleryHorizontalEnd,
+  Globe,
+  SearchX,
+  TriangleAlert,
+  UserLock,
+  UserRoundX,
+  Users,
+  Video,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
+
 import { Button } from "@/components/ui/button";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
-import { CircleUserRound, GalleryHorizontalEnd, Globe, SearchX, TriangleAlert, UserLock, UserRoundX, Users, Video } from "lucide-react";
 
 export const NotAuthorized = () => {
   const t = useTranslations("States.Error.NotAuthorized");
@@ -64,83 +75,41 @@ export const ErrorComponent = ({
 export const ExploreError = () => {
   const t = useTranslations("States.Error.Explore");
 
-  return (
-    <ErrorComponent
-      title={t("title")}
-      description={t("description")}
-      icon={TriangleAlert}
-    />
-  );
+  return <ErrorComponent title={t("title")} description={t("description")} icon={TriangleAlert} />;
 };
 
 export const SearchError = () => {
   const t = useTranslations("States.Error.Search");
 
-  return (
-    <ErrorComponent
-      title={t("title")}
-      description={t("description")}
-      icon={SearchX}
-    />
-  );
+  return <ErrorComponent title={t("title")} description={t("description")} icon={SearchX} />;
 };
 
 export const ProfileError = () => {
   const t = useTranslations("States.Error.Profile");
 
-  return (
-    <ErrorComponent
-      title={t("title")}
-      description={t("description")}
-      icon={UserRoundX}
-    />
-  );
+  return <ErrorComponent title={t("title")} description={t("description")} icon={UserRoundX} />;
 };
 
 export const FollowingError = () => {
   const t = useTranslations("States.Error.Following");
 
-  return (
-    <ErrorComponent
-      title={t("title")}
-      description={t("description")}
-      icon={Users}
-    />
-  );
+  return <ErrorComponent title={t("title")} description={t("description")} icon={Users} />;
 };
 
 export const FollowersError = () => {
   const t = useTranslations("States.Error.Followers");
 
-  return (
-    <ErrorComponent
-      title={t("title")}
-      description={t("description")}
-      icon={Users}
-    />
-  );
+  return <ErrorComponent title={t("title")} description={t("description")} icon={Users} />;
 };
 
 export const LibraryError = () => {
   const t = useTranslations("States.Error.Library");
 
-  return (
-    <ErrorComponent
-      title={t("title")}
-      description={t("description")}
-      icon={GalleryHorizontalEnd}
-    />
-  );
+  return <ErrorComponent title={t("title")} description={t("description")} icon={GalleryHorizontalEnd} />;
 };
 
 export const HiggsfieldMotionError = () => {
   const t = useTranslations("States.Error.HiggsfieldMotion");
 
-  return (
-    <ErrorComponent
-      title={t("title")}
-      description={t("description")}
-      icon={Video}
-    />
-  );
-}
+  return <ErrorComponent title={t("title")} description={t("description")} icon={Video} />;
+};

@@ -1,12 +1,13 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { Button } from "@/components/ui/button";
 import { useSubscribe, useUnsubscribe } from "@/hooks/useProfile";
 import { UserAttributes } from "@/types";
-import { useTranslations } from "next-intl";
 
 export const FollowButton = (user: UserAttributes) => {
-  const t = useTranslations("Components.FollowButton")
+  const t = useTranslations("Components.FollowButton");
   const subscribeMutation = useSubscribe();
   const unsubscribeMutation = useUnsubscribe();
 

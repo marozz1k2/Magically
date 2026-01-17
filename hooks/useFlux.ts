@@ -3,79 +3,81 @@ import { toast } from "sonner";
 
 import api from "@/lib/api";
 
-export interface TtModel {
+export interface FluxModel {
   id: string;
   userId: string;
   name: string;
   description?: string;
+  instruction?: string;
   imagePaths: string[];
   createdAt: string;
 }
 
-export interface GenerateTtParams {
+export interface GenerateFluxParams {
   prompt: string;
   modelId: string;
   publish: boolean;
+  aspect_ratio?: string;
 }
 
-const getModels = async (): Promise<TtModel[]> => {
-  const { data } = await api.get("/ttapi/models");
+const getModels = async (): Promise<FluxModel[]> => {
+  const { data } = await api.get("/flux/models");
   return data.data;
 };
 
-const getModelById = async (id: string): Promise<TtModel> => {
-  const { data } = await api.get(`/ttapi/models/${id}`);
+const getModelById = async (id: string): Promise<FluxModel> => {
+  const { data } = await api.get(`/flux/models/${id}`);
   return data.data;
 };
 
 const createModel = async (formData: FormData) => {
-  const { data } = await api.post("/ttapi/models", formData, {
+  const { data } = await api.post("/flux/models", formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
   return data;
 };
 
 const updateModel = async ({ id, formData }: { id: string; formData: FormData }) => {
-  const { data } = await api.put(`/ttapi/models/${id}`, formData, {
+  const { data } = await api.put(`/flux/models/${id}`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
   return data;
 };
 
 const deleteModel = async (id: string) => {
-  const { data } = await api.delete(`/ttapi/models/${id}`);
+  const { data } = await api.delete(`/flux/models/${id}`);
   return data;
 };
 
-const generateImage = async (params: GenerateTtParams) => {
-  const { data } = await api.post("/ttapi/generate", params);
+const generateImage = async (params: GenerateFluxParams) => {
+  const { data } = await api.post("/flux/generate", params);
   return data;
 };
 
 // Hooks
-export const useTtModels = () => {
+export const useFluxModels = () => {
   return useQuery({
-    queryKey: ["ttapi", "models"],
+    queryKey: ["flux", "models"],
     queryFn: getModels,
   });
 };
 
-export const useTtModel = (id: string) => {
+export const useFluxModel = (id: string) => {
   return useQuery({
-    queryKey: ["ttapi", "model", id],
+    queryKey: ["flux", "model", id],
     queryFn: () => getModelById(id),
     enabled: !!id,
     retry: 1,
   });
 };
 
-export const useCreateTtModel = () => {
+export const useCreateFluxModel = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createModel,
     onSuccess: () => {
-      toast.success("Model created successfully!");
-      queryClient.invalidateQueries({ queryKey: ["ttapi", "models"] });
+      toast.success("Flux Model created!");
+      queryClient.invalidateQueries({ queryKey: ["flux", "models"] });
     },
     onError: (err: any) => {
       toast.error(err.response?.data?.message || "Failed to create model");
@@ -83,13 +85,13 @@ export const useCreateTtModel = () => {
   });
 };
 
-export const useUpdateTtModel = () => {
+export const useUpdateFluxModel = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateModel,
     onSuccess: () => {
-      toast.success("Model updated successfully!");
-      queryClient.invalidateQueries({ queryKey: ["ttapi", "models"] });
+      toast.success("Flux Model updated!");
+      queryClient.invalidateQueries({ queryKey: ["flux", "models"] });
     },
     onError: (err: any) => {
       toast.error(err.response?.data?.message || "Failed to update model");
@@ -97,13 +99,13 @@ export const useUpdateTtModel = () => {
   });
 };
 
-export const useDeleteTtModel = () => {
+export const useDeleteFluxModel = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteModel,
     onSuccess: () => {
-      toast.success("Model deleted!");
-      queryClient.invalidateQueries({ queryKey: ["ttapi", "models"] });
+      toast.success("Flux Model deleted!");
+      queryClient.invalidateQueries({ queryKey: ["flux", "models"] });
     },
     onError: (err: any) => {
       toast.error(err.response?.data?.message || "Failed to delete model");
@@ -111,7 +113,7 @@ export const useDeleteTtModel = () => {
   });
 };
 
-export const useGenerateTtImage = () => {
+export const useGenerateFluxImage = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: generateImage,

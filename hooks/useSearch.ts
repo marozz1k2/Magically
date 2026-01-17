@@ -1,7 +1,8 @@
-import api from "@/lib/api";
-import { UserAttributes } from "@/types";
-import { queryKeys } from "@/lib/queryKeys";
 import { useQuery } from "@tanstack/react-query";
+
+import api from "@/lib/api";
+import { queryKeys } from "@/lib/queryKeys";
+import { UserAttributes } from "@/types";
 
 // --- API Functions ---
 const searchAll = async (params: { query?: string; type?: string; sortBy?: string; hashtag?: string }) => {

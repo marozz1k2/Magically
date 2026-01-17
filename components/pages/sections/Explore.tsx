@@ -1,30 +1,23 @@
 "use client";
 
-import { useTheme } from "next-themes";
-import { useUser } from "@/hooks/useAuth";
 import { useEffect, useRef, useState } from "react";
-import { usePublications } from "@/hooks/usePublications";
+import { useTheme } from "next-themes";
 
+import { PublicationCard } from "@/components/shared/publication/PublicationCard";
 import { ExploreEmpty } from "@/components/states/empty/Empty";
+import { ExploreError } from "@/components/states/error/Error";
 import { ExploreLoader } from "@/components/states/loaders/Loaders";
 import { ShootingStars } from "@/components/ui/magic/shooting-stars";
 import { StarsBackground } from "@/components/ui/magic/stars-background";
-import { ExploreError } from "@/components/states/error/Error";
-import { PublicationCard } from "@/components/shared/publication/PublicationCard";
+import { useUser } from "@/hooks/useAuth";
+import { usePublications } from "@/hooks/usePublications";
 
 export const Explore = () => {
   const { data: user } = useUser();
   const { theme } = useTheme();
   const [filters] = useState({ sortBy: "newest", hashtag: "" });
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-    isError,
-  } = usePublications(filters);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } = usePublications(filters);
 
   const observerRef = useRef<HTMLDivElement>(null);
 
@@ -77,11 +70,7 @@ export const Explore = () => {
       {/* Stars Layer */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
         <StarsBackground className="h-full! w-full! opacity-100" />
-        <ShootingStars
-          starColor={starColor}
-          trailColor={trailColor}
-          className="h-full! w-full!"
-        />
+        <ShootingStars starColor={starColor} trailColor={trailColor} className="h-full! w-full!" />
       </div>
 
       {/* Scrollable content */}
@@ -89,11 +78,7 @@ export const Explore = () => {
         <div className="grid-4 mt-4 gap-6">
           {data?.pages.map((page) =>
             page.publications.map((publication: any) => (
-              <PublicationCard
-                key={publication.id}
-                publication={publication}
-                userId={user?.id}
-              />
+              <PublicationCard key={publication.id} publication={publication} userId={user?.id} />
             ))
           )}
         </div>

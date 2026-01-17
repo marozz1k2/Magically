@@ -1,5 +1,6 @@
-import api from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
+
+import api from "@/lib/api";
 
 export const useActiveGeneration = () => {
   return useQuery({
@@ -12,7 +13,6 @@ export const useActiveGeneration = () => {
     staleTime: 0,
   });
 };
-
 
 export const useGenerationHistory = () => {
   return useQuery({

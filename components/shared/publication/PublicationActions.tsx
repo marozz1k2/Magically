@@ -1,36 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { EllipsisVertical, Pencil, Trash } from "lucide-react";
 import { useTranslations } from "next-intl";
-import {
-  useDeletePublication,
-  useUpdatePublication
-} from "@/hooks/usePublications";
-
 import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-
-import {
-  EllipsisVertical,
-  Pencil,
-  Trash
-} from "lucide-react";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle
-} from "@/components/ui/dialog";
-
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Textarea } from "@/components/ui/textarea";
+import { useDeletePublication, useUpdatePublication } from "@/hooks/usePublications";
 
 interface PublicationActionsProps {
   publicationId: string;

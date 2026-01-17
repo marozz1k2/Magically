@@ -1,41 +1,25 @@
 "use client";
 
-import Link from "next/link";
-
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ProfilePrompt } from "@/lib/utils";
-import { ChevronLeft, Loader2 } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ChevronLeft, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+
+import { UploadImage } from "@/components/shared/create/UploadImage";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useGenerateNanoImage } from "@/hooks/useNano";
+import { ProfilePrompt } from "@/lib/utils";
 import { formSchema, FormValues } from "@/lib/validation";
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { useGenerateNanoImage } from "@/hooks/useNano";
-import { UploadImage } from "@/components/shared/create/UploadImage";
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/components/ui/toggle-group";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from "@/components/ui/form";
-
 export const Profile = () => {
-  const t = useTranslations("Pages.Effects.PhotoGenerate")
+  const t = useTranslations("Pages.Effects.PhotoGenerate");
   const router = useRouter();
   const generateNano = useGenerateNanoImage();
   const [loading, setLoading] = useState(false);
@@ -70,7 +54,7 @@ export const Profile = () => {
       }
     } catch (error: any) {
       console.error(error);
-      <div className="text-red-500">{error}</div>
+      <div className="text-red-500">{error}</div>;
     } finally {
       setLoading(false);
     }
@@ -86,9 +70,7 @@ export const Profile = () => {
       </div>
       <Card className="bg-transparent shadow-none border-none mt-8 md:mt-0">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 title-text">
-            {t("Profile")}
-          </CardTitle>
+          <CardTitle className="flex items-center gap-2 title-text">{t("Profile")}</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -100,10 +82,7 @@ export const Profile = () => {
                   <FormItem>
                     <FormLabel>{t("ReferenceImage")}</FormLabel>
                     <FormControl>
-                      <UploadImage
-                        imageAmount={1}
-                        onChange={(files) => field.onChange(files)}
-                      />
+                      <UploadImage imageAmount={1} onChange={(files) => field.onChange(files)} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -116,26 +95,23 @@ export const Profile = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{t("Aspect.title")}</FormLabel>
-                    <ToggleGroup onValueChange={field.onChange} defaultValue={field.value} type="single" className="flex flex-wrap items-center justify-center gap-2">
+                    <ToggleGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      type="single"
+                      className="flex flex-wrap items-center justify-center gap-2"
+                    >
                       <ToggleGroupItem value="1:1" aria-label="Toggle bold" className="size-28 border">
-                        <div className="flex items-center justify-center text-xs">
-                          {t("Aspect.1:1")}
-                        </div>
+                        <div className="flex items-center justify-center text-xs">{t("Aspect.1:1")}</div>
                       </ToggleGroupItem>
                       <ToggleGroupItem value="16:9" aria-label="Toggle italic" className="size-28 border">
-                        <div className="flex items-center justify-center text-xs">
-                          {t("Aspect.16:9")}
-                        </div>
+                        <div className="flex items-center justify-center text-xs">{t("Aspect.16:9")}</div>
                       </ToggleGroupItem>
                       <ToggleGroupItem value="9:16" aria-label="Toggle strikethrough" className="size-28 border">
-                        <div className="flex items-center justify-center text-xs">
-                          {t("Aspect.9:16")}
-                        </div>
+                        <div className="flex items-center justify-center text-xs">{t("Aspect.9:16")}</div>
                       </ToggleGroupItem>
                       <ToggleGroupItem value="4:3" aria-label="Toggle strikethrough" className="size-28 border">
-                        <div className="flex items-center justify-center text-xs">
-                          {t("Aspect.4:3")}
-                        </div>
+                        <div className="flex items-center justify-center text-xs">{t("Aspect.4:3")}</div>
                       </ToggleGroupItem>
                     </ToggleGroup>
                     <FormMessage />
@@ -143,25 +119,17 @@ export const Profile = () => {
                 )}
               />
 
-
               <FormField
                 control={form.control}
                 name="publish"
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                     <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
+                      <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                     </FormControl>
                     <div className="space-y-1 leading-none">
-                      <FormLabel>
-                        {t("Publish.title")}
-                      </FormLabel>
-                      <p className="text-sm text-muted-foreground">
-                        {t("Publish.description")}
-                      </p>
+                      <FormLabel>{t("Publish.title")}</FormLabel>
+                      <p className="text-sm text-muted-foreground">{t("Publish.description")}</p>
                     </div>
                   </FormItem>
                 )}
@@ -173,7 +141,9 @@ export const Profile = () => {
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     {t("Generate.action")}
                   </>
-                ) : t("Generate.title")}
+                ) : (
+                  t("Generate.title")
+                )}
               </Button>
             </form>
           </Form>

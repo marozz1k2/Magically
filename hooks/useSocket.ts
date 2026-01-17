@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { io, Socket } from "socket.io-client";
-import { useUser } from "./useAuth";
 import { useQueryClient } from "@tanstack/react-query";
+import { io, Socket } from "socket.io-client";
+
+import { useUser } from "./useAuth";
 
 export const useSocket = () => {
   const { data: user } = useUser();
@@ -13,9 +14,7 @@ export const useSocket = () => {
   useEffect(() => {
     if (!user) return;
 
-    const socketUrl =
-      process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "") ||
-      "http://localhost:5000";
+    const socketUrl = process.env.NEXT_PUBLIC_API_URL?.replace("/api/v1", "") || "http://localhost:5000";
 
     const socket = io(socketUrl, {
       transports: ["websocket"],
@@ -31,7 +30,7 @@ export const useSocket = () => {
       queryClient.invalidateQueries({ queryKey: ["generation", data.jobId] });
       queryClient.invalidateQueries({ queryKey: ["generationHistory"] });
     });
-    
+
     return () => {
       socket.off("jobUpdate");
       socket.disconnect();

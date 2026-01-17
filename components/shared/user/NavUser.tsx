@@ -1,18 +1,9 @@
 "use client";
 
 import Link from "next/link";
-
-import { useLogout } from "@/hooks/useAuth";
+import { ChevronsUpDown, Cog, LogOut } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { UserAttributes } from "@/types";
-import { UserAvatar } from "../user/UserAvatar";
-
-import {
-  ChevronsUpDown,
-  Cog,
-  LogOut,
-} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,12 +13,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar
-} from "@/components/ui/sidebar";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
+import { useLogout } from "@/hooks/useAuth";
+import { UserAttributes } from "@/types";
+import { UserAvatar } from "../user/UserAvatar";
 
 export function NavUser(user: UserAttributes) {
   const t = useTranslations("Components.NavUser");
@@ -50,7 +39,7 @@ export function NavUser(user: UserAttributes) {
               {user && <UserAvatar {...user} size="md" />}
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.username}</span>
-                <Link href="/transactions" className="truncate text-xs link-text">✦{user.tokens}</Link>
+                <span className="text-xs">✦{user.tokens}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -89,4 +78,4 @@ export function NavUser(user: UserAttributes) {
       </SidebarMenuItem>
     </SidebarMenu>
   );
-};
+}

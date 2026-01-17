@@ -1,12 +1,13 @@
 "use client";
 
-import { useParams } from 'next/navigation';
-import { Generation } from '@/components/pages/dynamic/Generation';
+import { useParams } from "next/navigation";
+
+import { Generation } from "@/components/pages/dynamic/Generation";
 
 const Page = () => {
-    const { generationId } = useParams();
+  const { generationId } = useParams();
 
-    return <Generation generationId={generationId as string} />;
+  return <Generation generationId={generationId as string} />;
 };
 
 export default Page;

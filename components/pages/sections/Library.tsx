@@ -1,24 +1,23 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
-import { API_URL } from "@/lib/api";
-import { useUser } from "@/hooks/useAuth";
-import { useTranslations } from "next-intl";
-import { useGallery } from "@/hooks/useGallery";
-import { useTransactions } from "@/hooks/useTransaction";
-import { useGenerationHistory } from "@/hooks/useGenerations";
-import { useTtModels } from "@/hooks/useTtapi"; // Import models hook
-
-import { Badge } from "@/components/ui/badge";
-import { JobEmpty, LibraryEmpty, ModelsEmpty } from "@/components/states/empty/Empty";
-import { ExploreLoader, LargeListLoader, SearchLoader } from "@/components/states/loaders/Loaders";
+import Image from "next/image";
+import Link from "next/link";
 import { Clock, Verified, X } from "lucide-react";
-import { NotAuthorized } from "@/components/states/error/Error";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
+
 import { PublicationImage } from "@/components/shared/publication/PublicationImage";
+import { JobEmpty, LibraryEmpty, ModelsEmpty } from "@/components/states/empty/Empty";
+import { NotAuthorized } from "@/components/states/error/Error";
+import { ExploreLoader, LargeListLoader, SearchLoader } from "@/components/states/loaders/Loaders";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useUser } from "@/hooks/useAuth";
+import { useFluxModels } from "@/hooks/useFlux";
+import { useGallery } from "@/hooks/useGallery";
+import { useGenerationHistory } from "@/hooks/useGenerations";
+import { API_URL } from "@/lib/api";
 
 export const Library = () => {
   const t = useTranslations("Pages.Library");
@@ -27,9 +26,14 @@ export const Library = () => {
 
   const { data: galleryItems, isLoading: isGalleryLoading } = useGallery(galleryFilters);
   const { data: jobs, isLoading: isJobsLoading } = useGenerationHistory();
-  const { data: models, isLoading: isModelsLoading } = useTtModels();
+  const { data: models, isLoading: isModelsLoading } = useFluxModels();
 
-  if (!user) return <div className="state-center"><NotAuthorized /></div>;
+  if (!user)
+    return (
+      <div className="state-center">
+        <NotAuthorized />
+      </div>
+    );
 
   return (
     <section className="container mx-auto section-padding">
@@ -44,14 +48,26 @@ export const Library = () => {
 
         <TabsContent value="gallery">
           {isGalleryLoading && <ExploreLoader />}
-          {galleryItems?.length === 0 && <div className="state-center"><LibraryEmpty /></div>}
+          {galleryItems?.length === 0 && (
+            <div className="state-center">
+              <LibraryEmpty />
+            </div>
+          )}
           <div className="grid-4 gap-4">
             {galleryItems?.map((item: any) => (
               <div key={item.id} className="relative group rounded-lg overflow-hidden border">
-                <Image src={`${API_URL}${item.imageUrl}`} alt={item.prompt} width={300} height={300} className="object-cover w-full aspect-square" />
+                <Image
+                  src={`${API_URL}${item.imageUrl}`}
+                  alt={item.prompt}
+                  width={300}
+                  height={300}
+                  className="object-cover w-full aspect-square"
+                />
                 <div className="flex flex-col items-start justify-center p-4 text-sm gap-4">
                   <p className="prompt-text text-tertiary-text">{item.prompt}</p>
-                  <time className="text-muted-foreground">{new Date(item.createdAt).toLocaleString()}</time>
+                  <time className="justify-self-end text-muted-foreground">
+                    {new Date(item.createdAt).toLocaleString()}
+                  </time>
                 </div>
               </div>
             ))}
@@ -60,7 +76,11 @@ export const Library = () => {
 
         <TabsContent value="jobs">
           {isJobsLoading && <LargeListLoader />}
-          {jobs?.length === 0 && <div className="state-center"><JobEmpty /></div>}
+          {jobs?.length === 0 && (
+            <div className="state-center">
+              <JobEmpty />
+            </div>
+          )}
           <div className="flex flex-col gap-3">
             {jobs?.map((job: any) => (
               <Link href={`/create/generation/${job.id}`} key={job.id}>
@@ -70,9 +90,21 @@ export const Library = () => {
                       <span className="font-bold text-sm uppercase">{job.service}</span>
                       <span className="text-xs text-muted-foreground">{new Date(job.createdAt).toLocaleString()}</span>
                     </div>
-                    {job.status === 'completed' && <Badge className="flex items-center justify-center btn-solid"><Verified /> {job.status}</Badge>}
-                    {(job.status === 'pending' || job.status === 'processing') && <Badge className="btn-magic-secondary"><Clock /> {job.status}</Badge>}
-                    {job.status === 'failed' && <Badge variant="destructive"><X /> {job.status}</Badge>}
+                    {job.status === "completed" && (
+                      <Badge className="flex items-center justify-center btn-solid">
+                        <Verified /> {job.status}
+                      </Badge>
+                    )}
+                    {(job.status === "pending" || job.status === "processing") && (
+                      <Badge className="btn-magic-secondary">
+                        <Clock /> {job.status}
+                      </Badge>
+                    )}
+                    {job.status === "failed" && (
+                      <Badge variant="destructive">
+                        <X /> {job.status}
+                      </Badge>
+                    )}
                   </CardHeader>
                   <CardContent className="p-4 pt-0 w-fit prompt-text text-tertiary-text">
                     {job.meta?.prompt || "No prompt"}
@@ -86,7 +118,11 @@ export const Library = () => {
         {/* Models Tab */}
         <TabsContent value="models">
           {isModelsLoading && <ExploreLoader />}
-          {(!models || models.length === 0) && <div className="state-center"><ModelsEmpty /></div>}
+          {(!models || models.length === 0) && (
+            <div className="state-center">
+              <ModelsEmpty />
+            </div>
+          )}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {models?.map((model) => (
               // Redirect to main models page as requested
@@ -104,7 +140,6 @@ export const Library = () => {
                   </CardHeader>
                   <CardFooter className="p-4 pt-0 text-xs text-muted-foreground flex justify-between">
                     <span>{new Date(model.createdAt).toLocaleDateString()}</span>
-                    <span>{t("Flux")}</span>
                   </CardFooter>
                 </Card>
               </Link>

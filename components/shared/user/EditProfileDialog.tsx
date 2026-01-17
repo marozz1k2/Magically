@@ -1,27 +1,20 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { useTranslations } from "next-intl";
-import { UserAttributes } from "@/types";
-import {
-  useUpdateAvatar,
-  useUpdateProfile
-} from "@/hooks/useProfile";
-
-import { toast } from "sonner";
 import { Pencil } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
 import { Button } from "@/components/ui/button";
+import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useUpdateAvatar, useUpdateProfile } from "@/hooks/useProfile";
+import { UserAttributes } from "@/types";
 import { UserAvatar } from "./UserAvatar";
-import {
-  DialogContent,
-  DialogHeader,
-  DialogTitle
-} from "@/components/ui/dialog";
 
 export const EditProfileDialog = ({ user, setOpen }: { user: UserAttributes; setOpen: (open: boolean) => void }) => {
-  const t = useTranslations("Components.EditProfile")
+  const t = useTranslations("Components.EditProfile");
   const { register, handleSubmit } = useForm({
     defaultValues: {
       fullname: user.fullname,

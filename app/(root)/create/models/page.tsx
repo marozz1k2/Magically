@@ -1,7 +1,7 @@
-import { Models } from '@/components/pages/generations/models/Models';
+import { Models } from "@/components/pages/generations/models/Models";
 
 const Page = () => {
-    return <Models />
+  return <Models />;
 };
 
 export default Page;

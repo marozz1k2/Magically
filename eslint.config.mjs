@@ -63,7 +63,7 @@ export default [
       "@typescript-eslint/no-var-requires": "off",
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-unused-expressions": "off",
-      "@typescript-eslint/no-non-null-asserted-optional-chain": "off"
+      "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     },
   },
 ];

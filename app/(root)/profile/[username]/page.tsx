@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
+
 import { Profile } from "@/components/pages/dynamic/Profile";
 
 const Page = () => {

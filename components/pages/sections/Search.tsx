@@ -1,21 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useUser } from "@/hooks/useAuth";
+import { SearchIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useDebounceValue } from "usehooks-ts";
-import { usePublications } from "@/hooks/usePublications";
-import { useSearch, useRecommendedUsers } from "@/hooks/useSearch";
 
-import { SearchIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { UserCard } from "@/components/shared/user/UserCard";
-import { SearchLoader } from "@/components/states/loaders/Loaders";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PublicationCardSimplified } from "@/components/shared/publication/PublicationCard";
+import { UserCard } from "@/components/shared/user/UserCard";
 import { SearchPublicationEmpty, SearchUserEmpty } from "@/components/states/empty/Empty";
 import { ExploreError, NotAuthorized, SearchError } from "@/components/states/error/Error";
+import { SearchLoader } from "@/components/states/loaders/Loaders";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useUser } from "@/hooks/useAuth";
+import { usePublications } from "@/hooks/usePublications";
+import { useRecommendedUsers, useSearch } from "@/hooks/useSearch";
 
 export const Search = () => {
   const t = useTranslations("Pages.Search");
@@ -29,15 +29,8 @@ export const Search = () => {
     isError: isSearchError,
   } = useSearch({ ...filters, query: debouncedQuery });
 
-  const { data: recommendedUsers, isLoading: isLoadingRecommended } = useRecommendedUsers(
-    !debouncedQuery
-  );
-  const {
-    data: feedData,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = usePublications({ sortBy: "newest" });
+  const { data: recommendedUsers, isLoading: isLoadingRecommended } = useRecommendedUsers(!debouncedQuery);
+  const { data: feedData, fetchNextPage, hasNextPage, isFetchingNextPage } = usePublications({ sortBy: "newest" });
 
   const isEmptySearch = !debouncedQuery;
 
@@ -98,9 +91,9 @@ export const Search = () => {
                   <UserCard key={user.id} user={user} />
                 ))}
               </>
-            ) : (user ? (
+            ) : user ? (
               <SearchUserEmpty />
-            ) : null)}
+            ) : null}
           </TabsContent>
 
           <TabsContent value="publications" className="space-y-4 mt-4">
@@ -123,19 +116,15 @@ export const Search = () => {
                 {/* sentinel for IntersectionObserver to auto-load next page */}
                 {hasNextPage && (
                   <div className="flex justify-center mt-4">
-                    <Button
-                      onClick={() => fetchNextPage()}
-                      disabled={isFetchingNextPage}
-                      variant="outline"
-                    >
+                    <Button onClick={() => fetchNextPage()} disabled={isFetchingNextPage} variant="outline">
                       {isFetchingNextPage ? t("loading") : t("loadMore")}
                     </Button>
                   </div>
                 )}
               </>
-            ) : (user ? (
+            ) : user ? (
               <SearchPublicationEmpty />
-            ) : null)}
+            ) : null}
           </TabsContent>
         </Tabs>
       ) : (
@@ -151,9 +140,9 @@ export const Search = () => {
                   <UserCard key={user.id} user={user} />
                 ))}
               </>
-            ) : (user ? (
+            ) : user ? (
               <SearchUserEmpty />
-            ) : null)}
+            ) : null}
           </TabsContent>
           <TabsContent value="publications" className="space-y-4 mt-4">
             {searchResults?.publications.length > 0 ? (
@@ -164,9 +153,9 @@ export const Search = () => {
                   ))}
                 </div>
               </>
-            ) : (user ? (
+            ) : user ? (
               <SearchPublicationEmpty />
-            ) : null)}
+            ) : null}
           </TabsContent>
         </Tabs>
       )}

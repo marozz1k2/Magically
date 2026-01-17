@@ -1,24 +1,10 @@
-import Link from "next/link";
 import Image from "next/image";
-
+import Link from "next/link";
+import { BookOpen, GalleryHorizontalEnd, Newspaper, SearchX, UserRoundX, Workflow } from "lucide-react";
 import { useTranslations } from "next-intl";
+
 import { Button } from "@/components/ui/button";
-import {
-  BookOpen,
-  GalleryHorizontalEnd,
-  Newspaper,
-  SearchX,
-  UserRoundX,
-  Workflow
-} from "lucide-react";
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle
-} from "@/components/ui/empty";
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 
 export const EmptyComponent = ({
   title,
@@ -68,24 +54,12 @@ export const ExploreEmpty = () => {
 
 export const SearchUserEmpty = () => {
   const t = useTranslations("States.Empty.SearchUser");
-  return (
-    <EmptyComponent
-      title={t("title")}
-      description={t("description")}
-      icon={UserRoundX}
-    />
-  );
+  return <EmptyComponent title={t("title")} description={t("description")} icon={UserRoundX} />;
 };
 
 export const SearchPublicationEmpty = () => {
   const t = useTranslations("States.Empty.SearchPublication");
-  return (
-    <EmptyComponent
-      title={t("title")}
-      description={t("description")}
-      icon={SearchX}
-    />
-  );
+  return <EmptyComponent title={t("title")} description={t("description")} icon={SearchX} />;
 };
 
 export const PersonalProfileEmpty = () => {
@@ -103,13 +77,7 @@ export const PersonalProfileEmpty = () => {
 
 export const UserProfileEmpty = () => {
   const t = useTranslations("States.Empty.UserProfile");
-  return (
-    <EmptyComponent
-      title={t("title")}
-      description={t("description")}
-      icon={BookOpen}
-    />
-  );
+  return <EmptyComponent title={t("title")} description={t("description")} icon={BookOpen} />;
 };
 
 export const LibraryEmpty = () => {
@@ -152,7 +120,6 @@ export const NotFoundPage = () => {
   );
 };
 
-
 export const ModelsEmpty = () => {
   const t = useTranslations("States.Empty.Models");
 
@@ -160,13 +127,7 @@ export const ModelsEmpty = () => {
     <Empty>
       <EmptyHeader>
         <EmptyMedia variant="default">
-          <Image
-            src="/model.jpg"
-            alt="model"
-            width={1024}
-            height={1024}
-            className="rounded-xl"
-          />
+          <Image src="/model.jpg" alt="model" width={1024} height={1024} className="rounded-xl" />
         </EmptyMedia>
         <EmptyTitle>{t("title")}</EmptyTitle>
         <EmptyDescription>{t("description")}</EmptyDescription>
@@ -177,5 +138,5 @@ export const ModelsEmpty = () => {
         </Link>
       </EmptyContent>
     </Empty>
-  )
+  );
 };

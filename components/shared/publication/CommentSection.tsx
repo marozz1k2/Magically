@@ -1,30 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
-import { useUser } from "@/hooks/useAuth";
 import * as React from "react";
-
-import { Comment } from "@/types";
-import { enUS, ru } from "date-fns/locale";
-import { UserAvatar } from "../user/UserAvatar";
 import { formatDistanceToNow } from "date-fns";
+import { enUS, ru } from "date-fns/locale";
 import { AnimatePresence, motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { ChevronDown, Dot, Heart, MessageCircle, Send, Trash2, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-import {
-  Dot,
-  Heart,
-  MessageCircle,
-  Send,
-  Trash2,
-  X,
-  ChevronDown
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useUser } from "@/hooks/useAuth";
 import {
   useComments,
   useCreateComment,
@@ -33,16 +22,13 @@ import {
   useReplyToComment,
   useUnlikeComment,
 } from "@/hooks/useComments";
-import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
+import { Comment } from "@/types";
+import { UserAvatar } from "../user/UserAvatar";
 
 // CommentCard component
 function CommentCard({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      className={cn("bg-transparent flex flex-col", className)}
-      {...props}
-    />
-  );
+  return <div className={cn("bg-transparent flex flex-col", className)} {...props} />;
 }
 
 function CommentCardContent({ className, ...props }: React.ComponentProps<"div">) {
@@ -90,9 +76,9 @@ export const CommentSection = ({ publicationId }: { publicationId: string }) => 
   };
 
   const toggleReplies = (commentId: string) => {
-    setShowRepliesMap(prev => ({
+    setShowRepliesMap((prev) => ({
       ...prev,
-      [commentId]: !prev[commentId]
+      [commentId]: !prev[commentId],
     }));
   };
 
@@ -103,17 +89,17 @@ export const CommentSection = ({ publicationId }: { publicationId: string }) => 
     const flatten = (reply: Comment) => {
       flattened.push(reply);
       if (reply.replies && reply.replies.length > 0) {
-        reply.replies.forEach(nestedReply => flatten(nestedReply));
+        reply.replies.forEach((nestedReply) => flatten(nestedReply));
       }
     };
 
-    replies.forEach(reply => flatten(reply));
+    replies.forEach((reply) => flatten(reply));
     return flattened;
   };
 
   const renderSingleComment = (comment: Comment, isReply: boolean = false, parentAuthor: string | null = null) => {
     return (
-      <CommentCard key={comment.id} className={isReply ? 'ml-12' : ''}>
+      <CommentCard key={comment.id} className={isReply ? "ml-12" : ""}>
         <CommentCardContent className="px-2 py-2">
           <div className="flex items-start gap-3">
             <UserAvatar {...comment.author} size="sm" />
@@ -127,12 +113,9 @@ export const CommentSection = ({ publicationId }: { publicationId: string }) => 
                     locale: locale === "ru" ? ru : enUS,
                   })}
                 </span>
-
               </div>
               <p className="text-sm leading-relaxed wrap-break-word">
-                {parentAuthor && (
-                  <span className="text-lime-500 font-medium mr-1">@{parentAuthor} </span>
-                )}
+                {parentAuthor && <span className="text-lime-500 font-medium mr-1">@{parentAuthor} </span>}
                 {comment.text.length > 128 ? (
                   <>
                     <span>{expandedCommentsMap[comment.id] ? comment.text : `${comment.text.slice(0, 128)}...`}</span>
@@ -141,9 +124,9 @@ export const CommentSection = ({ publicationId }: { publicationId: string }) => 
                       size="sm"
                       className="px-2 h-auto cursor-pointer text-muted-foreground"
                       onClick={() => {
-                        setExpandedCommentsMap(prev => ({
+                        setExpandedCommentsMap((prev) => ({
                           ...prev,
-                          [comment.id]: !prev[comment.id]
+                          [comment.id]: !prev[comment.id],
                         }));
                       }}
                     >
@@ -164,7 +147,9 @@ export const CommentSection = ({ publicationId }: { publicationId: string }) => 
                       className={`h-4 w-4 transition-colors 
                         ${comment.isLiked ? "text-red-500 fill-red-500" : ""}`}
                     />
-                    <span className={`text-xs ${comment.isLiked ? "text-red-500 fill-red-500" : ""}`}>{comment.likeCount}</span>
+                    <span className={`text-xs ${comment.isLiked ? "text-red-500 fill-red-500" : ""}`}>
+                      {comment.likeCount}
+                    </span>
                   </button>
                 </motion.div>
 
@@ -238,11 +223,7 @@ export const CommentSection = ({ publicationId }: { publicationId: string }) => 
                   <ChevronDown className="h-4 w-4 rotate-180" />
                   {t("hideReplies")}
                 </button>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="space-y-1"
-                >
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-1">
                   {allReplies.map((reply, index) => {
                     let parentAuthor = comment.author.username;
                     if (index > 0) {

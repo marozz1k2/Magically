@@ -1,13 +1,10 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
 
+import { useLikePublication, useUnlikePublication } from "@/hooks/usePublications";
 import { Publication } from "@/types";
-import { motion } from "framer-motion";
-import {
-  useLikePublication,
-  useUnlikePublication
-} from "@/hooks/usePublications";
 
 export const LikeButton = (publication: Publication) => {
   const likePublication = useLikePublication();
@@ -23,7 +20,7 @@ export const LikeButton = (publication: Publication) => {
     }
 
     if (likePublication?.mutateAsync) {
-      likePublication.mutateAsync(publication.id).catch(() => { });
+      likePublication.mutateAsync(publication.id).catch(() => {});
       return;
     }
   };
@@ -37,7 +34,7 @@ export const LikeButton = (publication: Publication) => {
     }
 
     if (unLikePublication?.mutateAsync) {
-      unLikePublication.mutateAsync(publication.id).catch(() => { });
+      unLikePublication.mutateAsync(publication.id).catch(() => {});
       return;
     }
   };
@@ -57,7 +54,8 @@ export const LikeButton = (publication: Publication) => {
           className={`${publication.isLiked ? "text-red-500 fill-red-500" : ""} 
           dark:${publication.isLiked ? "text-red-400 fill-red-400" : ""} stroke-1`}
         >
-          {publication.likeCount}</span>
+          {publication.likeCount}
+        </span>
       </button>
     </motion.div>
   );

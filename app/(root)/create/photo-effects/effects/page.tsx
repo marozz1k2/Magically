@@ -1,7 +1,7 @@
-import { PhotoEffects } from '@/components/pages/generations/effects/photo/PhotoEffects';
+import { PhotoEffects } from "@/components/pages/generations/effects/photo/PhotoEffects";
 
 const Page = () => {
-    return <PhotoEffects />
+  return <PhotoEffects />;
 };
 
 export default Page;

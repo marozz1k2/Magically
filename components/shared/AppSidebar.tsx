@@ -1,19 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-
 import { useRef } from "react";
-import { useUser } from "@/hooks/useAuth";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
-
-import { NavUser } from "./user/NavUser";
-import { AuroraText } from "../ui/magic/aurora-text";
-import { MagicButton } from "../ui/magic/magic-button";
-import { ThemeSwitcher } from "../functions/ThemeSwitcher";
-import { LanguageSwitcher } from "../functions/LanguageSwitcher";
-
 import {
   Brush,
   ChevronRight,
@@ -27,8 +17,9 @@ import {
   TriangleAlert,
   UserRound,
   Video,
-  Wand
+  Wand,
 } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 
 import {
   Sidebar,
@@ -41,6 +32,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useUser } from "@/hooks/useAuth";
+import { LanguageSwitcher } from "../functions/LanguageSwitcher";
+import { ThemeSwitcher } from "../functions/ThemeSwitcher";
+import { AuroraText } from "../ui/magic/aurora-text";
+import { MagicButton } from "../ui/magic/magic-button";
+import { NavUser } from "./user/NavUser";
 
 export function AppSidebar() {
   const t = useTranslations("Components.Sidebar");
@@ -88,7 +85,13 @@ export function AppSidebar() {
       <SidebarContent className="theme border-none px-2">
         <SidebarGroup>
           <SidebarGroupLabel className="flex items-center gap-2 my-6">
-            <Image src="/assets/logo.jpg" alt="logo" width={36} height={36} className="border border-violet-500 rounded-lg" />
+            <Image
+              src="/assets/logo.jpg"
+              alt="logo"
+              width={36}
+              height={36}
+              className="border border-violet-500 rounded-lg"
+            />
             <h1 className="text-xl font-bold">
               <AuroraText>{t("Logo")}</AuroraText>
             </h1>
@@ -122,27 +125,57 @@ export function AppSidebar() {
 
                       <div className="flex flex-col pl-3 mt-2 gap-1">
                         <SidebarMenuButton asChild className="p-3 rounded-full text-md magic-transition">
-                          <Link href="/create/magic-photo" className="btn-magic-secondary flex items-center justify-start">
+                          <Link
+                            href="/create/magic-photo"
+                            className="btn-magic-secondary flex items-center justify-start"
+                          >
                             <Wand className="size-5" />
                             <span className="font-semibold z-20">{t("MagicPhoto")}</span>
                           </Link>
                         </SidebarMenuButton>
                         <SidebarMenuButton asChild className="p-3 rounded-full text-md magic-transition">
-                          <Link href="/create/photo-editor" className="btn-magic-secondary flex items-center justify-start">
-                            <Brush />
-                            <span className="font-semibold">{t("Effects.PhotoEditor")}</span>
+                          <Link
+                            href="/"
+                            className="btn-magic-secondary flex items-center justify-start relative cursor-not-allowed"
+                          >
+                            <div className="flex items-center relative gap-1 blur-xs">
+                              <Brush />
+                              <span className="font-semibold">{t("Effects.PhotoEditor")}</span>
+                            </div>
+                            <div className="absolute flex items-center gap-1 text-xs font-bold text-yellow-200">
+                              <TriangleAlert className="size-5" />
+                              {t("InDevelopment")}
+                            </div>
                           </Link>
                         </SidebarMenuButton>
                         <SidebarMenuButton asChild className="p-3 rounded-full text-md magic-transition">
-                          <Link href="/create/photo-effects" className="btn-magic-secondary flex items-center justify-start">
-                            <Loader />
-                            <span className="font-semibold">{t("Effects.PhotoEffects")}</span>
+                          <Link
+                            href="/"
+                            className="btn-magic-secondary flex items-center justify-start relative cursor-not-allowed"
+                          >
+                            <div className="flex items-center relative gap-1 blur-xs">
+                              <Loader />
+                              <span className="font-semibold">{t("Effects.PhotoEffects")}</span>
+                            </div>
+                            <div className="absolute flex items-center gap-1 text-xs font-bold text-yellow-200">
+                              <TriangleAlert className="size-5" />
+                              {t("InDevelopment")}
+                            </div>
                           </Link>
                         </SidebarMenuButton>
                         <SidebarMenuButton asChild className="p-3 mb-1 rounded-full text-md magic-transition">
-                          <Link href="/create/video-effects" className="btn-magic-secondary flex items-center justify-start">
-                            <Video />
-                            <span className="font-semibold">{t("Effects.VideoEffects")}</span>
+                          <Link
+                            href="/"
+                            className="btn-magic-secondary flex items-center justify-start relative cursor-not-allowed"
+                          >
+                            <div className="flex items-center relative gap-1 blur-xs">
+                              <Video />
+                              <span className="font-semibold">{t("Effects.VideoEffects")}</span>
+                            </div>
+                            <div className="absolute flex items-center gap-1 text-xs font-bold text-yellow-200">
+                              <TriangleAlert className="size-5" />
+                              {t("InDevelopment")}
+                            </div>
                           </Link>
                         </SidebarMenuButton>
                       </div>
@@ -156,7 +189,7 @@ export function AppSidebar() {
                           ${pathname === item.url ? "magic-hover" : "secondary-hover"}`}
                     >
                       <Link href={item.url} className={`${pathname === item.url ? "btn-magic" : ""}`}>
-                        <span className="flex justify-center items-center size-5">{locale === 'ru' ? 'В' : 'M'}</span>
+                        <span className="flex justify-center items-center size-5">{locale === "ru" ? "В" : "M"}</span>
                         <span>{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
@@ -213,4 +246,4 @@ export function AppSidebar() {
       </SidebarFooter>
     </Sidebar>
   );
-};
+}

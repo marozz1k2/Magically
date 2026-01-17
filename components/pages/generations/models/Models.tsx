@@ -1,42 +1,39 @@
 "use client";
 
-import Link from "next/link";
-
 import { useState } from "react";
-import { Plus, MoreVertical, Trash, Sparkles } from "lucide-react";
-import { API_URL } from "@/lib/api";
+import Link from "next/link";
+import { MoreVertical, Pencil, Plus, Sparkles, Trash } from "lucide-react";
 import { useTranslations } from "next-intl";
-
+import { CreateModelDialog } from "@/components/shared/create/CreateModelDialog";
+import { PublicationImage } from "@/components/shared/publication/PublicationImage";
+import { ListLoader } from "@/components/states/loaders/Loaders";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ModelsEmpty } from "@/components/states/empty/Empty";
-import { ListLoader } from "@/components/states/loaders/Loaders";
-
-import { useTtModels, useDeleteTtModel } from "@/hooks/useTtapi";
-import { CreateModelDialog } from "@/components/shared/create/CreateModelDialog";
-import { PublicationImage } from "@/components/shared/publication/PublicationImage";
+import { useDeleteFluxModel, useFluxModels } from "@/hooks/useFlux";
+import { API_URL } from "@/lib/api";
 
 export const Models = () => {
   const t = useTranslations("Pages.Models");
-  const { data: models, isLoading } = useTtModels();
-  const deleteModel = useDeleteTtModel();
+  const { data: models, isLoading } = useFluxModels();
+  const deleteModel = useDeleteFluxModel();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [modelToEdit, setModelToEdit] = useState<any>(null);
 
   const handleCreate = () => {
+    setModelToEdit(null);
+    setIsDialogOpen(true);
+  };
+
+  const handleEdit = (model: any) => {
+    setModelToEdit(model);
     setIsDialogOpen(true);
   };
 
@@ -46,17 +43,17 @@ export const Models = () => {
     }
   };
 
-  if (isLoading) return <div className="section-padding"><ListLoader /></div>;
+  if (isLoading)
+    return (
+      <div className="section-padding">
+        <ListLoader />
+      </div>
+    );
 
   return (
     <section className="section-padding container mx-auto max-w-6xl min-h-screen">
       <div className="flex flex-col sm:flex-row items-center justify-between mt-4 mb-6 gap-4">
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          <h1 className="title-text">{t("title")}</h1>
-          {/* <span className="text-muted-foreground text-base">
-            {models?.length || 0}
-          </span> */}
-        </div>
+        <h1 className="title-text">{t("title")}</h1>
         <div className="flex flex-col md:flex-row gap-4 md:gap-2 w-full sm:w-auto">
           <Button onClick={handleCreate} className="btn-outline flex-1 sm:flex-none gap-2">
             <Plus className="size-4" /> {t("create")}
@@ -71,64 +68,61 @@ export const Models = () => {
 
       <Separator className="my-4" />
 
-      {(!models || models.length === 0) ? (
+      {!models || models.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-screen">
-          <Button onClick={handleCreate} className="mt-2 btn-solid">
+          <p className="text-muted-foreground mb-4">{t("emptyDesc")}</p>
+          <Button onClick={handleCreate} className="btn-solid">
             {t("createFirst")}
           </Button>
         </div>
       ) : (
         <div className="grid-3">
           {models.map((model) => (
-            <Card className="group relative overflow-hidden theme shadow-none py-0" key={model.id}>
-              {/* Image Preview */}
-              <Link href={`/create/models/${model.id}`} className="block relative aspect-square bg-muted overflow-hidden">
-                <PublicationImage
-                  src={`${API_URL}${model.imagePaths[0]}`}
-                  alt={model.name}
-                  className="rounded-none!"
-                />
-              </Link>
-
-              <CardHeader className="p-4 pb-2">
-                <div className="flex justify-between items-start">
-                  <Link href={`/create/models/${model.id}`} className="hover:underline">
-                    <CardTitle className="text-lg truncate pr-2">{model.name}</CardTitle>
-                  </Link>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-8 w-8 -mt-1 -mr-2">
-                        <MoreVertical className="size-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => handleDelete(model.id)} className="text-red-500 focus:text-red-500">
-                        <Trash className="text-red-500" /> Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+            <Link href={`/create/models/${model.id}`} key={model.id}>
+              <Card className="group relative overflow-hidden theme shadow-none py-0 h-full">
+                <div className="relative aspect-square bg-muted overflow-hidden">
+                  <PublicationImage
+                    src={`${API_URL}${model.imagePaths[0]}`}
+                    alt={model.name}
+                    className="rounded-none!"
+                  />
                 </div>
-              </CardHeader>
-
-              <CardContent className="p-4 pt-0">
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {model.description || ""}
-                </p>
-              </CardContent>
-
-              <CardFooter className="p-4 pt-0 text-xs text-muted-foreground flex justify-between">
-                <span>{new Date(model.createdAt).toLocaleDateString()}</span>
-                <span>Flux 2 Pro</span>
-              </CardFooter>
-            </Card>
+                <CardHeader className="">
+                  <div className="flex justify-between items-start">
+                    <div className="pr-2">
+                      <CardTitle className="text-lg truncate">{model.name}</CardTitle>
+                    </div>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon" className="size-8">
+                          <MoreVertical className="size-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={(e) => { e.preventDefault(); handleEdit(model); }}>
+                          <Pencil className="mr-2 size-4" /> Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={(e) => { e.preventDefault(); handleDelete(model.id); }}
+                          className="text-red-500 focus:text-red-500"
+                        >
+                          <Trash className="text-red-500 mr-2 size-4" /> Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </CardHeader>
+                <CardContent></CardContent>
+                <CardFooter className="py-4 text-xs text-muted-foreground flex items-end">
+                  <span>{new Date(model.createdAt).toLocaleDateString()}</span>
+                </CardFooter>
+              </Card>
+            </Link>
           ))}
         </div>
       )}
 
-      <CreateModelDialog
-        open={isDialogOpen}
-        onOpenChange={setIsDialogOpen}
-      />
+      <CreateModelDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} modelToEdit={modelToEdit} type="flux" />
     </section>
   );
 };

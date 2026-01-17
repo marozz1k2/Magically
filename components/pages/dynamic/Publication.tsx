@@ -1,26 +1,25 @@
 "use client";
 
-import Link from "next/link";
-
 import { useState } from "react";
+import Link from "next/link";
+import { ChevronLeft, Heart, MessageCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
+
+import { AuthRequiredPopover } from "@/components/shared/publication/AuthRequiredPopover";
+import { CommentSection } from "@/components/shared/publication/CommentSection";
+import { LikeButton } from "@/components/shared/publication/LikeButton";
+import { PublicationActions } from "@/components/shared/publication/PublicationActions";
+import { PublicationImage } from "@/components/shared/publication/PublicationImage";
+import { SubscribeButton } from "@/components/shared/publication/SubscribeButton";
+import { VideoRender } from "@/components/shared/publication/VideoRender";
+import { UserProfile } from "@/components/shared/user/UserProfile";
+import { ExploreError } from "@/components/states/error/Error";
+import { PublicationLoader } from "@/components/states/loaders/Loaders";
+import { Button } from "@/components/ui/button";
+import { useUser } from "@/hooks/useAuth";
+import { usePublication } from "@/hooks/usePublications";
 import { API_URL } from "@/lib/api";
 import { formatDate } from "@/lib/utils";
-import { useUser } from "@/hooks/useAuth";
-import { useTranslations } from "next-intl";
-import { usePublication } from "@/hooks/usePublications";
-
-import { Button } from "@/components/ui/button";
-import { ExploreError } from "@/components/states/error/Error";
-import { ChevronLeft, Heart, MessageCircle } from "lucide-react";
-import { UserProfile } from "@/components/shared/user/UserProfile";
-import { LikeButton } from "@/components/shared/publication/LikeButton";
-import { PublicationLoader } from "@/components/states/loaders/Loaders";
-import { VideoRender } from "@/components/shared/publication/VideoRender";
-import { CommentSection } from "@/components/shared/publication/CommentSection";
-import { SubscribeButton } from "@/components/shared/publication/SubscribeButton";
-import { PublicationActions } from "@/components/shared/publication/PublicationActions";
-import { AuthRequiredPopover } from "@/components/shared/publication/AuthRequiredPopover";
-import { PublicationImage } from "@/components/shared/publication/PublicationImage";
 
 export const Publication = ({ publicationId }: { publicationId: string }) => {
   const t = useTranslations("Components.PublicationActions");
@@ -51,7 +50,7 @@ export const Publication = ({ publicationId }: { publicationId: string }) => {
           <SubscribeButton
             publication={publication}
             style="login"
-            className={`${user?.id === publication.author.id ? 'hidden' : 'block'} ${!user ? 'hidden' : 'block'}`}
+            className={`${user?.id === publication.author.id ? "hidden" : "block"} ${!user ? "hidden" : "block"}`}
           />
         </div>
         {publication.videoUrl ? (
@@ -60,10 +59,7 @@ export const Publication = ({ publicationId }: { publicationId: string }) => {
             className="rounded-xl object-cover aspect-square w-full"
           />
         ) : (
-          <PublicationImage
-            src={`${API_URL}${publication.imageUrl}`}
-            alt="publication"
-          />
+          <PublicationImage src={`${API_URL}${publication.imageUrl}`} alt="publication" />
         )}
 
         <div className="flex flex-col items-start justify-center gap-2 px-2">
@@ -91,15 +87,19 @@ export const Publication = ({ publicationId }: { publicationId: string }) => {
           <article className="mb-2">
             {publication.content.length > 256 ? (
               <>
-                <span className="text-base! prompt-text text-tertiary-text">{expandedCommentsMap[publication.id] ? publication.content : `${publication.content.slice(0, 256)}...`}</span>
+                <span className="text-base! prompt-text text-tertiary-text">
+                  {expandedCommentsMap[publication.id]
+                    ? publication.content
+                    : `${publication.content.slice(0, 256)}...`}
+                </span>
                 <Button
                   variant="link"
                   size="sm"
                   className="px-0 h-auto cursor-pointer text-muted-foreground font-normal"
                   onClick={() => {
-                    setExpandedCommentsMap(prev => ({
+                    setExpandedCommentsMap((prev) => ({
                       ...prev,
-                      [publication.id]: !prev[publication.id]
+                      [publication.id]: !prev[publication.id],
                     }));
                   }}
                 >

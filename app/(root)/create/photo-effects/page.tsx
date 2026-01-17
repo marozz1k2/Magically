@@ -1,7 +1,7 @@
-import { Effects } from '@/components/pages/generations/effects/Effects';
+import { Effects } from "@/components/pages/generations/effects/Effects";
 
 const Page = () => {
-    return <Effects />
+  return <Effects />;
 };
 
 export default Page;

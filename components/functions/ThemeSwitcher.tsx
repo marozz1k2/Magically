@@ -1,11 +1,11 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { MoonIcon, SunIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useTheme } from "next-themes";
 
 import { Button } from "../ui/button";
-import { MoonIcon, SunIcon } from "lucide-react";
 
 export const ThemeSwitcher = () => {
   const t = useTranslations("Components.Theme");
