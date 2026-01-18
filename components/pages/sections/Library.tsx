@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { Clock, Verified, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -56,11 +56,9 @@ export const Library = () => {
           <div className="grid-4 gap-4">
             {galleryItems?.map((item: any) => (
               <div key={item.id} className="relative group rounded-lg overflow-hidden border">
-                <Image
+                <PublicationImage
                   src={`${API_URL}${item.imageUrl}`}
                   alt={item.prompt}
-                  width={300}
-                  height={300}
                   className="object-cover w-full aspect-square"
                 />
                 <div className="flex flex-col items-start justify-center p-4 text-sm gap-4">
