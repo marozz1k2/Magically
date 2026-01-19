@@ -11,20 +11,20 @@ const api = axios.create({
   timeout: 900000,
 });
 
-if (typeof window !== "undefined") {
-  api.interceptors.request.use(
-    (config) => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
-    },
-    (error) => {
-      // Handle request errors
-      return Promise.reject(error);
-    }
-  );
-}
+// if (typeof window !== "undefined") {
+//   api.interceptors.request.use(
+//     (config) => {
+//       const token = localStorage.getItem("token");
+//       if (token) {
+//         config.headers.Authorization = `Bearer ${token}`;
+//       }
+//       return config;
+//     },
+//     (error) => {
+//       // Handle request errors
+//       return Promise.reject(error);
+//     }
+//   );
+// }
 
 export default api;

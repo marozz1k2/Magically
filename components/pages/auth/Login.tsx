@@ -78,17 +78,14 @@ export const Login = () => {
 
       <div className="w-full max-w-sm space-y-4 border p-6 rounded-xl theme z-20">
         <h1 className="title-text">{t("Title")}</h1>
-        {!isTelegramWebApp && (
-          <LoginButton
-            botUsername="volshebhy_bot"
-            onAuthCallback={handleTelegramAuth}
-            buttonSize="large"
-            cornerRadius={5}
-            showAvatar
-            lang="en"
-          />
-        )}
-
+        <LoginButton
+          botUsername="volshebhy_bot"
+          onAuthCallback={handleTelegramAuth}
+          buttonSize="large"
+          cornerRadius={5}
+          showAvatar
+          lang="en"
+        />
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
