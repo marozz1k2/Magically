@@ -46,7 +46,7 @@ export const ExploreEmpty = () => {
       title={t("title")}
       description={t("description")}
       button={t("button")}
-      buttonLink="/create/photo-effects"
+      buttonLink="/create/magic-photo/tt"
       icon={Newspaper}
     />
   );
@@ -69,7 +69,7 @@ export const PersonalProfileEmpty = () => {
       title={t("title")}
       description={t("description")}
       button={t("button")}
-      buttonLink="/create/photo-effects"
+      buttonLink="/create/magic-photo/tt"
       icon={BookOpen}
     />
   );
@@ -87,7 +87,7 @@ export const LibraryEmpty = () => {
       title={t("title")}
       description={t("description")}
       button={t("button")}
-      buttonLink="/create/photo-effects"
+      buttonLink="/create/magic-photo/tt"
       icon={GalleryHorizontalEnd}
     />
   );
@@ -134,6 +134,27 @@ export const ModelsEmpty = () => {
       </EmptyHeader>
       <EmptyContent>
         <Link href="/create/models">
+          <Button className="btn-login">{t("button")}</Button>
+        </Link>
+      </EmptyContent>
+    </Empty>
+  );
+};
+
+export const TtModelsEmpty = () => {
+  const t = useTranslations("States.Empty.Models");
+
+  return (
+    <Empty>
+      <EmptyHeader>
+        <EmptyMedia variant="default">
+          <Image src="/model.jpg" alt="model" width={1024} height={1024} className="rounded-xl" />
+        </EmptyMedia>
+        <EmptyTitle>{t("title")}</EmptyTitle>
+        <EmptyDescription>{t("description")}</EmptyDescription>
+      </EmptyHeader>
+      <EmptyContent>
+        <Link href="/create/models/ttapi">
           <Button className="btn-login">{t("button")}</Button>
         </Link>
       </EmptyContent>

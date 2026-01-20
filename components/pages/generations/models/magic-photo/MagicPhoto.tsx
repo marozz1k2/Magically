@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { z } from "zod";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlertCircle, Loader2, Sparkles } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 
@@ -16,6 +15,9 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useFluxModels, useGenerateFluxImage } from "@/hooks/useFlux";
+import { ModelsEmpty } from "@/components/states/empty/Empty";
+import { useUser } from "@/hooks/useAuth";
+import { NotAuthorized } from "@/components/states/error/Error";
 
 const formSchema = z.object({
   prompt: z.string().min(3),
@@ -28,6 +30,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 export const MagicPhoto = () => {
   const t = useTranslations("Pages.MagicPhoto");
+  const { data: user } = useUser();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -78,7 +81,15 @@ export const MagicPhoto = () => {
     }
   };
 
-  if (isModelsLoading) {
+  if (!user) {
+    return (
+      <div className="state-center">
+        <NotAuthorized />
+      </div>
+    );
+  }
+
+  if (user && isModelsLoading) {
     return (
       <div className="flex items-center justify-center h-[50vh]">
         <Loader2 className="animate-spin size-8" />
@@ -86,16 +97,9 @@ export const MagicPhoto = () => {
     );
   }
 
-  if (!models || models.length === 0) {
+  if (user && !models || models!.length === 0) {
     return (
-      <div className="section-padding flex flex-col items-center justify-center gap-4 mt-10">
-        <AlertCircle className="size-10 text-muted-foreground" />
-        <h2 className="title-text">{t("noModelsTitle")}</h2>
-        <p className="text-muted-foreground">{t("noModelsDesc")}</p>
-        <Link href="/create/models">
-          <Button className="btn-solid">{t("createModelBtn")}</Button>
-        </Link>
-      </div>
+      <ModelsEmpty />
     );
   }
 
@@ -127,7 +131,7 @@ export const MagicPhoto = () => {
                       </FormControl>
 
                       <SelectContent>
-                        {models.map((model) => (
+                        {models!.map((model) => (
                           <SelectItem key={model.id} value={model.id}>
                             {model.name}
                           </SelectItem>

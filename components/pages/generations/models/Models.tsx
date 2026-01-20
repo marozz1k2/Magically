@@ -18,9 +18,13 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { useDeleteFluxModel, useFluxModels } from "@/hooks/useFlux";
 import { API_URL } from "@/lib/api";
+import { ModelsEmpty } from "@/components/states/empty/Empty";
+import { useUser } from "@/hooks/useAuth";
+import { NotAuthorized } from "@/components/states/error/Error";
 
 export const Models = () => {
   const t = useTranslations("Pages.Models");
+  const { data: user } = useUser();
   const { data: models, isLoading } = useFluxModels();
   const deleteModel = useDeleteFluxModel();
 
@@ -43,12 +47,21 @@ export const Models = () => {
     }
   };
 
-  if (isLoading)
+  if (!user) {
     return (
-      <div className="section-padding">
+      <div className="section-padding state-center">
+        <NotAuthorized />
+      </div>
+    );
+  }
+
+  if (user && isLoading) {
+    return (
+      <div className="section-padding state-center">
         <ListLoader />
       </div>
     );
+  }
 
   return (
     <section className="section-padding container mx-auto max-w-6xl min-h-screen">
@@ -68,16 +81,11 @@ export const Models = () => {
 
       <Separator className="my-4" />
 
-      {!models || models.length === 0 ? (
-        <div className="flex flex-col items-center justify-center min-h-screen">
-          <p className="text-muted-foreground mb-4">{t("emptyDesc")}</p>
-          <Button onClick={handleCreate} className="btn-solid">
-            {t("createFirst")}
-          </Button>
-        </div>
+      {user && !models || models!.length === 0 ? (
+        <ModelsEmpty />
       ) : (
         <div className="grid-3">
-          {models.map((model) => (
+          {models!.map((model) => (
             <Link href={`/create/models/${model.id}`} key={model.id}>
               <Card className="group relative overflow-hidden theme shadow-none py-0 h-full">
                 <div className="relative aspect-square bg-muted overflow-hidden">

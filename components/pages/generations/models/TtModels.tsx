@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+
+import { useState } from "react";
 import { MoreVertical, Pencil, Plus, Sparkles, Trash } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -17,11 +18,15 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import { TtModelsEmpty } from "@/components/states/empty/Empty";
 import { useDeleteTtModel, useTtModels } from "@/hooks/useTtapi";
 import { API_URL } from "@/lib/api";
+import { NotAuthorized } from "@/components/states/error/Error";
+import { useUser } from "@/hooks/useAuth";
 
 export const TtModels = () => {
     const t = useTranslations("Pages.Models");
+    const { data: user } = useUser();
     const { data: models, isLoading } = useTtModels();
     const deleteModel = useDeleteTtModel();
 
@@ -44,12 +49,21 @@ export const TtModels = () => {
         }
     };
 
-    if (isLoading)
+    if (!user) {
         return (
-            <div className="section-padding">
+            <div className="section-padding state-center">
+                <NotAuthorized />
+            </div>
+        );
+    }
+
+    if (user && isLoading) {
+        return (
+            <div className="section-padding state-center">
                 <ListLoader />
             </div>
         );
+    }
 
     return (
         <section className="section-padding container mx-auto max-w-6xl min-h-screen">
@@ -69,16 +83,11 @@ export const TtModels = () => {
 
             <Separator className="my-4" />
 
-            {!models || models.length === 0 ? (
-                <div className="flex flex-col items-center justify-center min-h-screen">
-                    <p className="text-muted-foreground mb-4">{t("emptyDesc")}</p>
-                    <Button onClick={handleCreate} className="btn-solid">
-                        {t("createFirst")}
-                    </Button>
-                </div>
+            {user && !models || models!.length === 0 ? (
+                <TtModelsEmpty />
             ) : (
                 <div className="grid-3">
-                    {models.map((model) => (
+                    {models!.map((model) => (
                         <Link href={`/create/models/ttapi/${model.id}`} key={model.id}>
                             <Card className="group relative overflow-hidden theme shadow-none py-0 h-full">
                                 <div className="relative aspect-square bg-muted overflow-hidden">
