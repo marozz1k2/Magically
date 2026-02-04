@@ -126,6 +126,7 @@
       "Settings": "Settings"
     },
     "Publication": {
+      "copyPrompt": "Copy prompt",
       "noImage": "No image",
       "readLess": "Read less",
       "readMore": "Read more"
@@ -283,6 +284,7 @@
       }
     },
     "Library": {
+      "copyPrompt": "Copy prompt",
       "Flux": "Pro Model",
       "Gallery": "Gallery",
       "Jobs": "Generations",
