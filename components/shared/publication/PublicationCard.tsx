@@ -31,6 +31,11 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
   const t = useTranslations("Components.Publication");
   const [expandedCommentsMap, setExpandedCommentsMap] = useState<Record<string, boolean>>({});
 
+  const handleCopyPrompt = async () => {
+    if (!publication.content) return;
+    await navigator.clipboard.writeText(publication.content);
+  };
+
   return (
     <div className="flex flex-col items-start justify-center gap-2">
       <div className="relative w-full group">
@@ -74,6 +79,14 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
                   <span className="prompt-text text-tertiary-text">{publication.content}</span>
                 )}
               </article>
+              <Button
+                variant="outline"
+                size="sm"
+                className="self-start"
+                onClick={handleCopyPrompt}
+              >
+                {t("copyPrompt")}
+              </Button>
               {publication.videoUrl && (
                 <VideoRender
                   src={`${API_URL}${publication.videoUrl}`}
@@ -123,6 +136,9 @@ export const PublicationCard = ({ publication, userId }: PublicationCardProps) =
         >
           <div className="flex flex-col items-start justify-center gap-4 px-4">
             <UserProfile {...publication.author} />
+            <Button variant="outline" size="sm" onClick={handleCopyPrompt}>
+              {t("copyPrompt")}
+            </Button>
             <div className="flex items-center justify-start gap-4 mt-2">
               {userId ? (
                 <LikeButton {...publication} />

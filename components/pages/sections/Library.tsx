@@ -31,6 +31,11 @@ export const Library = () => {
     publishGalleryItem.mutate(galleryItemId);
   };
 
+  const handleCopyPrompt = async (prompt?: string) => {
+    if (!prompt) return;
+    await navigator.clipboard.writeText(prompt);
+  };
+
   if (!user)
     return (
       <div className="state-center">
@@ -70,6 +75,12 @@ export const Library = () => {
                     <p className="text-sm text-tertiary-text">
                       {job.meta?.prompt || "No prompt"}
                     </p>
+                    <Button
+                      className="btn-outline w-full"
+                      onClick={() => handleCopyPrompt(job.meta?.prompt)}
+                    >
+                      {t("copyPrompt")}
+                    </Button>
                   </CardContent>
                 </Card>
               </div>
@@ -95,9 +106,22 @@ export const Library = () => {
                     className="object-cover w-full aspect-square"
                   />
                 </Link>
-                <Button className="btn-outline w-full mt-2" onClick={() => { handlePublishGallery(item.id) }}>
-                  Upload to reel
-                </Button>
+                <div className="flex flex-col gap-2 mt-2">
+                  <Button
+                    className="btn-outline w-full"
+                    onClick={() => {
+                      handlePublishGallery(item.id);
+                    }}
+                  >
+                    Upload to reel
+                  </Button>
+                  <Button
+                    className="btn-outline w-full"
+                    onClick={() => handleCopyPrompt(item.prompt)}
+                  >
+                    {t("copyPrompt")}
+                  </Button>
+                </div>
               </div>
             ))}
           </div>
